@@ -1,0 +1,18 @@
+group 'minigur'
+version '0.1'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'mysql', name: 'mysql-connector-java', version: '6.0.4'
+    compile group: 'org.springframework.session', name: 'spring-session', version: '1.0.0.RELEASE'
+    compile group: 'com.amazonaws', name: 'aws-java-sdk-s3', version: '1.11.37'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '1.4.1.RELEASE'
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
