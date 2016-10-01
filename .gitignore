@@ -36,3 +36,5 @@ overridedb.*
 .factorypath
 dump.rdb
 transaction-logs
+application.properties
+out
