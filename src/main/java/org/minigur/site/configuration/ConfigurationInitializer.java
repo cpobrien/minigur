@@ -1,4 +1,4 @@
-package org.minigur.site;
+package org.minigur.site.configuration;
 
 import org.minigur.site.configuration.SessionConfiguration;
 import org.springframework.session.web.context.AbstractHttpSessionApplicationInitializer;
