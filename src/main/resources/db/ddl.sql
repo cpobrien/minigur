@@ -1,0 +1,53 @@
+CREATE DATABASE IF NOT EXISTS minigur;
+USE minigur;
+
+CREATE TABLE IF NOT EXISTS User (
+  id INT(11) NOT NULL AUTO_INCREMENT,
+  password VARCHAR(255),
+  login VARCHAR(32),
+  is_admin TINYINT,
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS Image (
+  id INT(11) NOT NULL AUTO_INCREMENT,
+  filename VARCHAR(6),
+  upload_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS Comment (
+  id INT(11) NOT NULL AUTO_INCREMENT,
+  user_id INT(11),
+  image_id INT(11),
+  text TEXT,
+  post_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  FOREIGN KEY (user_id) REFERENCES User (id),
+  FOREIGN KEY (image_id) REFERENCES Image (id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS Tag (
+  id INT(11) NOT NULL AUTO_INCREMENT,
+  name VARCHAR(32) NOT NULL UNIQUE,
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS TagRelations (
+  id INT(11) NOT NULL AUTO_INCREMENT,
+  image_id INT(11),
+  tag_id INT(11),
+  PRIMARY KEY (id),
+  FOREIGN KEY (image_id) REFERENCES Image (id),
+  FOREIGN KEY (tag_id) REFERENCES Tag (id)
+);
+
+CREATE TABLE IF NOT EXISTS Rating (
+  rating_id INT(11) NOT NULL AUTO_INCREMENT,
+  user_id INT(11),
+  image_id INT(11),
+  is_upvote TINYINT,
+  PRIMARY KEY (rating_id),
+  FOREIGN KEY (user_id) REFERENCES User (id),
+  FOREIGN KEY (image_id) REFERENCES Image (id) ON DELETE CASCADE
+);
