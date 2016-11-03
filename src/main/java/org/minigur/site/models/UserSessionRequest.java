@@ -1,10 +1,10 @@
 package org.minigur.site.models;
 
-public class UserCreationRequest {
+public class UserSessionRequest {
     private String username;
     private String password;
 
-    public UserCreationRequest(String username, String password) {
+    public UserSessionRequest(String username, String password) {
         this.username = username;
         this.password = password;
     }
