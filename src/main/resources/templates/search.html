@@ -25,13 +25,13 @@
     <div class="container">
         <div class="search-container">
             <form class="search-form">
-                <div class="form-group">
+                <div class="form-group col-md-6">
                     <label for="password">Query:</label>
                     <input class="form-control" type="text" name="query" id="query"><br>
                 </div>
-                <div class="form-group">
+                <div class="form-group col-md-4">
                     <label for="search-criteria">Filter:</label>
-                    <select name="search-critera" id="filter">
+                    <select class="form-control" name="search-critera" id="filter">
                        <option value="all"></option>
                        <option value="tags">Tags</option>
                        <option value="comments">Comments</option>
@@ -41,7 +41,7 @@
                 </div>
             </form>
 
-            <div class="buttons">
+            <div class="buttons btn-container col-md-2">
                 <button type="button" class="btn btn-default btn-search">Search</button>
             </div>
         </div>
