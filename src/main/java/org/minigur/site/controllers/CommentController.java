@@ -28,7 +28,7 @@ public class CommentController {
      */
     @RequestMapping(value = "/{imageId}/comment", method = RequestMethod.POST)
     Boolean postComment(HttpServletRequest request, @PathVariable("imageId") String imageId, @RequestBody Comment comment) {
-        Boolean userLoggedIn = request.getAttribute("user") == null;
+        Boolean userLoggedIn = request.getAttribute("user") != null;
         if (!userLoggedIn) {
             return false;
         }
@@ -60,7 +60,7 @@ public class CommentController {
     Boolean deleteComment(HttpServletRequest request,
                           @PathVariable("imageId") String imageId,
                           @PathVariable("commentId") String commentId) {
-        Boolean userLoggedIn = request.getAttribute("user") == null;
+        Boolean userLoggedIn = request.getAttribute("user") != null;
         if (!userLoggedIn) {
             return false;
         }
