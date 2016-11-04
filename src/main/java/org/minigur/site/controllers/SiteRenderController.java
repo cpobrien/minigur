@@ -2,6 +2,7 @@ package org.minigur.site.controllers;
 
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.minigur.site.Environment;
+import org.minigur.site.service.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
