@@ -5,18 +5,17 @@ import org.minigur.site.models.User;
 import org.minigur.site.models.UserSessionRequest;
 import org.minigur.site.service.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/user_api")
 public class UserController {
     @Autowired
     UserDAO userDao;
 
     @RequestMapping(value = "/{username}", method = RequestMethod.GET)
     User getUser(@PathVariable("username") String username) {
-        return new User(username, false);
+        return userDao.getUser(username);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
@@ -26,7 +25,6 @@ public class UserController {
             return false;
         }
         // TODO: Implement user creation
-        userDao.createUser(userCreationRequest);
         return true;
     }
 
