@@ -1,3 +1,4 @@
+DROP DATABASE minigur;
 CREATE DATABASE IF NOT EXISTS minigur;
 USE minigur;
 
@@ -10,6 +11,7 @@ CREATE TABLE IF NOT EXISTS UserCredentials (
 CREATE TABLE IF NOT EXISTS User (
   id INT(11) NOT NULL AUTO_INCREMENT,
   login VARCHAR(32),
+  password VARCHAR (256),
   is_admin BOOLEAN,
   PRIMARY KEY (id),
   FOREIGN KEY (login) REFERENCES UserCredentials (login) ON DELETE CASCADE

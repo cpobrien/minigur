@@ -22,7 +22,7 @@ public class SiteRenderController {
     @GetMapping("/")
     String home(HttpServletRequest request) {
         if (redirectToLogin(request)) {
-            return "login";
+            return "home";
         }
         return "home";
     }
@@ -46,26 +46,8 @@ public class SiteRenderController {
     @GetMapping("/search")
     String search(HttpServletRequest request, @RequestParam("query") String query) {
         if (redirectToLogin(request)) {
-            return "login";
+            return "search";
         }
         return "search";
-    }
-
-    public void print() {
-        try {
-            ResultSet resultSet = environment
-                    .getJdbcManager()
-                    .connect()
-                    .createStatement()
-                    .executeQuery("SELECT * FROM minigur.Image");
-            while (resultSet.next()) {
-                System.out.printf("The image with url %s, uploaded at time %s, was uploaded by the user with id %s.\n",
-                        resultSet.getString("filename"),
-                        resultSet.getString("upload_time"),
-                        resultSet.getString("owner_user"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 }
