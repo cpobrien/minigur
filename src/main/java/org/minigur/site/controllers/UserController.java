@@ -24,8 +24,7 @@ public class UserController {
         if (userLoggedIn) {
             return false;
         }
-        // TODO: Implement user creation
-        return true;
+        return userDao.createUser(userCreationRequest);
     }
 
     @RequestMapping(value = "/{username}", method = RequestMethod.DELETE)
