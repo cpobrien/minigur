@@ -18,9 +18,6 @@ public class UserDAO {
     @Autowired
     Environment environment;
 
-    @Autowired
-    BCryptPasswordEncoder bCryptPasswordEncoder;
-
     public User getUser(String username) {
         try {
             Connection c = environment.getJdbcManager().connect();
@@ -40,7 +37,7 @@ public class UserDAO {
 
     public Boolean checkPassword(UserSessionRequest request) {
         String username = request.getUsername();
-        String encodedPassword = bCryptPasswordEncoder.encode(request.getPassword());
+        String encodedPassword = new BCryptPasswordEncoder().encode(request.getPassword());
         try {
             Connection c = environment.getJdbcManager().connect();
             PreparedStatement ps = c.prepareStatement("SELECT * FROM minigur.User WHERE login = ? AND password = ?");
@@ -56,7 +53,7 @@ public class UserDAO {
 
     public Boolean createUser(UserSessionRequest request) {
         String username = request.getUsername();
-        String encodedPassword = bCryptPasswordEncoder.encode(request.getPassword());
+        String encodedPassword = new BCryptPasswordEncoder().encode(request.getPassword());
         try {
             Connection c = environment.getJdbcManager().connect();
             PreparedStatement ps = c.prepareStatement("INSERT INTO minigur.User VALUES (?, ?, ?)");
