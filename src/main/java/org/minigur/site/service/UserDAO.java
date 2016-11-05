@@ -59,6 +59,7 @@ public class UserDAO {
         return false;
     }
 
+    // http://stackoverflow.com/questions/22000915/preparedstatement-how-to-insert-data-into-multiple-tables-using-jdbc
     public Boolean createUser(UserSessionRequest request) {
         String username = request.getUsername();
         String encodedPassword = new BCryptPasswordEncoder().encode(request.getPassword());
@@ -91,7 +92,7 @@ public class UserDAO {
             e.printStackTrace();
             return false;
         }
-        return false;
+        return true;
     }
 
 }
