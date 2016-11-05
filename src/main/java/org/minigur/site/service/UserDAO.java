@@ -17,8 +17,7 @@ public class UserDAO {
     Environment environment;
 
     public User getUser(String username) {
-        try {
-            Connection c = environment.getJdbcManager().connect();
+        try (Connection c = environment.getJdbcManager().connect()) {
             PreparedStatement ps = c.prepareStatement("SELECT is_admin FROM minigur.User WHERE login = ?");
             ps.setString(1, username);
             ResultSet rs = ps.executeQuery();
@@ -26,7 +25,6 @@ public class UserDAO {
                 Boolean isAdmin = rs.getBoolean("is_admin");
                 return new User(username, isAdmin);
             }
-            c.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
