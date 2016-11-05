@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
 @RestController
 @RequestMapping("/")
 public class UserSessionController {
@@ -26,8 +29,9 @@ public class UserSessionController {
         if (userDAO.checkPassword(userSessionRequest)) {
             return false;
         }
-        User dummyUser = new User(userSessionRequest.getUsername(), false);
-        request.setAttribute("user", dummyUser);
+
+        User currentUser = new User(userSessionRequest.getUsername(), false);
+        request.setAttribute("user", currentUser);
         return true;
     }
 

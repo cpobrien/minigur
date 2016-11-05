@@ -40,11 +40,24 @@ public class UserDAO {
         String encodedPassword = new BCryptPasswordEncoder().encode(request.getPassword());
         try {
             Connection c = environment.getJdbcManager().connect();
-            PreparedStatement ps = c.prepareStatement("SELECT * FROM minigur.User WHERE login = ? AND password = ?");
+
+            //Validate login
+            PreparedStatement ps = c.prepareStatement("SELECT * FROM minigur.UserCredentials WHERE login = ? AND password = ?");
             ps.setString(1, username);
             ps.setString(2, encodedPassword);
             ResultSet rs = ps.executeQuery();
-            return rs.next();
+
+            if (rs.next()) {
+                //Get user and return
+                ps = c.prepareStatement("SELECT * FROM minigur.User WHERE login = ?");
+                ps.setString(1, username);
+                rs = ps.executeQuery();
+
+                return rs.next();
+            } else {
+                //Otherwise return
+                return rs.next();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -56,10 +69,9 @@ public class UserDAO {
         String encodedPassword = new BCryptPasswordEncoder().encode(request.getPassword());
         try {
             Connection c = environment.getJdbcManager().connect();
-            PreparedStatement ps = c.prepareStatement("INSERT INTO minigur.User VALUES (?, ?, ?)");
+            PreparedStatement ps = c.prepareStatement("INSERT INTO minigur.UserCredentials VALUES (?, ?)");
             ps.setString(1, username);
             ps.setString(2, encodedPassword);
-            ps.setBoolean(3, false);
             ps.execute();
             c.close();
         } catch (SQLException e) {
