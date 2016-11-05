@@ -1,0 +1,11 @@
+.container {
+    max-width: 540px;
+}
+
+.nav-header {
+    background-color: #0275d8;
+    padding: 10px;
+    margin: 10px 0px;
+    color: #FFF;
+    text-align: center;
+}

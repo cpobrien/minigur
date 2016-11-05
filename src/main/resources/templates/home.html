@@ -3,23 +3,35 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Hello, World!</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous"/>
-    <link rel="stylesheet" type="text/css" href="/css/dropzone.css"/>
-    <script src="/scripts/dropzone.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css"
+          integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="css/main.css"/>
 </head>
 <body>
+<nav class="nav-header">
     <div class="container">
-        <form id="upload-widget" method="post" action="/upload" class="dropzone">
-            <div class="form-group">
-                <label for="title">Title of the Image</label>
-                <input type="text" name="title" id="title"/>
-            </div>
-            <div class="fallback">
-                <input name="file" type="file"/>
-            </div>
-        </form>
+        <h3>Upload an Image</h3>
     </div>
+</nav>
+<div class="container">
+    <form id="image-upload" method="post" action="/image">
+        <div class="form-group">
+            <label for="title">Title of the Image</label>
+            <input type="text" class="form-control" name="title" id="title"/>
+        </div>
+        <div class="form-group">
+            <label for="image-file">Image to Upload</label>
+            <input name="file" type="file" class="form-control-file" id="image-file"/>
+        </div>
+
+    </form>
+    <button id="submit" class="btn btn-primary">Submit</button>
+</div>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js"
+        integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK"
+        crossorigin="anonymous"></script>
+<script src="scripts/imageUpload.js"/>
 </html>
