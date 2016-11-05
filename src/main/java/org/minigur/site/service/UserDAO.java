@@ -1,6 +1,4 @@
 package org.minigur.site.service;
-
-import org.minigur.site.controllers.UserSessionController;
 import org.minigur.site.models.User;
 import org.minigur.site.models.UserSessionRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +17,7 @@ public class UserDAO {
     Environment environment;
 
     public User getUser(String username) {
-        try {
-            Connection c = environment.getJdbcManager().connect();
+        try (Connection c = environment.getJdbcManager().connect()) {
             PreparedStatement ps = c.prepareStatement("SELECT is_admin FROM minigur.User WHERE login = ?");
             ps.setString(1, username);
             ResultSet rs = ps.executeQuery();
@@ -28,7 +25,6 @@ public class UserDAO {
                 Boolean isAdmin = rs.getBoolean("is_admin");
                 return new User(username, isAdmin);
             }
-            c.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -38,9 +34,8 @@ public class UserDAO {
     public Boolean checkPassword(UserSessionRequest request) {
         String username = request.getUsername();
         String encodedPassword = new BCryptPasswordEncoder().encode(request.getPassword());
-        try {
-            Connection c = environment.getJdbcManager().connect();
 
+        try (Connection c = environment.getJdbcManager().connect()){
             //Validate login
             PreparedStatement ps = c.prepareStatement("SELECT * FROM minigur.UserCredentials WHERE login = ? AND password = ?");
             ps.setString(1, username);
@@ -67,13 +62,18 @@ public class UserDAO {
     public Boolean createUser(UserSessionRequest request) {
         String username = request.getUsername();
         String encodedPassword = new BCryptPasswordEncoder().encode(request.getPassword());
-        try {
-            Connection c = environment.getJdbcManager().connect();
-            PreparedStatement ps = c.prepareStatement("INSERT INTO minigur.UserCredentials VALUES (?, ?)");
-            ps.setString(1, username);
-            ps.setString(2, encodedPassword);
-            ps.execute();
-            c.close();
+        try (Connection c = environment.getJdbcManager().connect()){
+            try (PreparedStatement ps = c.prepareStatement("INSERT INTO minigur.UserCredentials(login, password) VALUES (?, ?)")) {
+                ps.setString(1, username);
+                ps.setString(2, encodedPassword);
+                ps.execute();
+            }
+            try (PreparedStatement ps = c.prepareStatement("INSERT INTO minigur.User(login, is_admin) VALUES (?, ?)")) {
+                ps.setString(1, username);
+                ps.setBoolean(2, false);
+                ps.execute();
+            }
+
         } catch (SQLException e) {
             return false;
         }
