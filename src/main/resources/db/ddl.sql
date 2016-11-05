@@ -3,17 +3,17 @@ CREATE DATABASE IF NOT EXISTS minigur;
 USE minigur;
 
 CREATE TABLE IF NOT EXISTS UserCredentials (
-  login VARCHAR(32),
+  username VARCHAR(32),
   password VARCHAR(255),
-  PRIMARY KEY (login)
+  PRIMARY KEY (username)
 );
 
 CREATE TABLE IF NOT EXISTS User (
   id INT(11) NOT NULL AUTO_INCREMENT,
-  login VARCHAR(32),
+  username VARCHAR(32),
   is_admin BOOLEAN,
   PRIMARY KEY (id),
-  FOREIGN KEY (login) REFERENCES UserCredentials (login) ON DELETE CASCADE
+  FOREIGN KEY (username) REFERENCES UserCredentials (username) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Image (
@@ -62,27 +62,27 @@ CREATE TABLE IF NOT EXISTS Rating (
 );
 
 # Adding 5 User Credentials
-INSERT INTO UserCredentials (password, login)
+INSERT INTO UserCredentials (username, password)
 VALUES ('b123', 'bob123');
-INSERT INTO UserCredentials (password, login)
+INSERT INTO UserCredentials (username, password)
 VALUES ('69forlife', 'mary27');
-INSERT INTO UserCredentials (password, login)
+INSERT INTO UserCredentials (username, password)
 VALUES ('howudoin', 'joe2');
-INSERT INTO UserCredentials (password, login)
+INSERT INTO UserCredentials (username, password)
 VALUES ('chicken', 'jane');
-INSERT INTO UserCredentials (password, login)
+INSERT INTO UserCredentials (username, password)
 VALUES ('wut27', 'rolf');
 
 # Adding 5 Users
-INSERT INTO User (login, is_admin)
+INSERT INTO User (username, is_admin)
 VALUES ('bob123', false);
-INSERT INTO User (login, is_admin)
+INSERT INTO User (username, is_admin)
 VALUES ('mary27', false);
-INSERT INTO User (login, is_admin)
+INSERT INTO User (username, is_admin)
 VALUES ('joe2', true);
-INSERT INTO User (login, is_admin)
+INSERT INTO User (username, is_admin)
 VALUES ('jane', false);
-INSERT INTO User (login, is_admin)
+INSERT INTO User (username, is_admin)
 VALUES ('rolf', true);
 
 # Adding 5 Images
