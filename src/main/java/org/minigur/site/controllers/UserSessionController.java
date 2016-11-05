@@ -26,10 +26,9 @@ public class UserSessionController {
         if (alreadyLoggedIn) {
             return false;
         }
-        if (userDAO.checkPassword(userSessionRequest)) {
+        if (!userDAO.checkPassword(userSessionRequest)) {
             return false;
         }
-
         User currentUser = new User(userSessionRequest.getUsername(), false);
         request.setAttribute("user", currentUser);
         return true;

@@ -22,7 +22,7 @@ public class SiteRenderController {
     @GetMapping("/")
     String home(HttpServletRequest request) {
         if (redirectToLogin(request)) {
-            return "home";
+            return "login";
         }
         return "home";
     }

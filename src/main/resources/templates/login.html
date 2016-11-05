@@ -2,51 +2,35 @@
 <head>
     <title>Login</title>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="/scripts/login.js"></script>
-
-    <link rel="stylesheet" type="text/css" href="/css/login.css"></link>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
-
-    <script>
-        $(document).ready(function(){
-            $('.btn-register').on('click', function(){
-                registerUser();
-            });
-
-            $('.btn-login').on('click', function(){
-                loginUser();
-            });
-        });
-    </script>
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css"
+          integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous"/>
+    <link rel="stylesheet" type="text/css" href="/css/main.css"/>
 </head>
 <body>
-    <h1 class="welcome-header">Welcome to Minigur!</h1>
-    <div class="container">
-        <div class="inner-container">
-            <form class="login-register-form">
-                <div class="form-group">
-                    <label for="username">Username:</label>
-                    <input class="form-control" type="text" name="username" id="username"/>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input class="form-control" type="text" name="password" id="password"/>
-                </div>
-            </form>
 
-            <div class="buttons">
-                <button type="button" class="btn btn-default btn-login">Login</button>
-                <div class="register">
-                    <button type="button" class="btn btn-default btn-register"></button>
-                    <p class="btn-register-text">Register</p>
-                </div>
-            </div>
+<nav class="nav-header">
+    <h1>Welcome to Minigur!</h1>
+</nav>
+<div class="container login-container">
+    <div id="error-holder"/>
+    <form class="login-register-form">
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input class="form-control" type="text" name="username" id="username"/>
         </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input class="form-control" type="password" name="password" id="password"/>
+        </div>
+    </form>
 
+    <div class="buttons">
+        <button type="button" class="btn btn-primary" id="login">Login</button>
+        <button type="button" class="btn btn-secondary" id="register">Register</button>
     </div>
-
+</div>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="/scripts/login.js"></script>
 </html>

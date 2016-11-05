@@ -4,6 +4,9 @@ public class UserSessionRequest {
     private String username;
     private String password;
 
+    public UserSessionRequest() {
+    }
+
     public UserSessionRequest(String username, String password) {
         this.username = username;
         this.password = password;

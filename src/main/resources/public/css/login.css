@@ -7,21 +7,3 @@
 	margin-left: 32%;
 	width: 30%;
 }
-
-.btn-login {
-	width: 100%;
-	background-color: grey !important;
-	color: white!important;
-}
-
-.btn-register {
-	height: 3.5%;
-	width: 100%;
-	background-color: #337ab7 !important;
-}
-
-.btn-register-text {
-	margin-top: -6%;
-	margin-left: 43%;
-	color: white
-}

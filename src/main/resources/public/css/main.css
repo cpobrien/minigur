@@ -1,4 +1,4 @@
-.container {
+.normal-container {
     max-width: 540px;
 }
 
@@ -8,4 +8,8 @@
     margin: 10px 0px;
     color: #FFF;
     text-align: center;
+}
+
+.login-container {
+    max-width: 350px;
 }
