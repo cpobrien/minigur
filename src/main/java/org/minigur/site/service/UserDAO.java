@@ -95,4 +95,20 @@ public class UserDAO {
         return true;
     }
 
+    public int getUserID(String username) {
+        try (Connection c = environment.getJdbcManager().connect()) {
+            PreparedStatement ps = c.prepareStatement("SELECT id FROM minigur.User WHERE username = ?");
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("id");
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
+        }
+        return -1;
+    }
+
 }

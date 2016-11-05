@@ -2,6 +2,7 @@ package org.minigur.site.service;
 
 import org.minigur.site.Environment;
 import org.minigur.site.models.Comment;
+import org.minigur.site.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.Connection;
@@ -9,16 +10,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.Date;
 import java.util.List;
 
-/**
- * Created by DavidKorchinsky on 2016-11-04.
- */
+
 public class CommentDAO {
 
     @Autowired
     Environment environment;
+
+    @Autowired
+    UserDAO userDAO;
 
     public List<Comment> getComments(String imageID) {
         List<Comment> comments = new ArrayList<>();
@@ -35,6 +37,51 @@ public class CommentDAO {
             return null;
         }
         return comments;
+    }
+
+    public Comment getComment(String commentID) {
+        Comment comment;
+        String query = "SELECT * FROM minigur.Comment comm, minigur.User u, WHERE comm.user_id = u.id AND comm.id = ?";
+        try(Connection c = environment.getJdbcManager().connect()) {
+            PreparedStatement ps = c.prepareStatement(query);
+            ps.setString(1, commentID);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                User user = new User(rs.getString("u.username"), rs.getBoolean("u.is_admin"));
+                String text = rs.getString("comm.text");
+                int imageId = rs.getInt("comm.image_id");
+                Date date = rs.getDate("comm.post_time");
+                return new Comment(text, user, imageId, date);
+            }
+            else {
+                return null;
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public boolean addComment(Comment comment) {
+
+        try(Connection c = environment.getJdbcManager().connect()) {
+            PreparedStatement ps = c.prepareStatement("INSERT INTO minigur.Comment (user_id, image_id, text) VALUES (?, ?, ?)");
+
+            int userId = userDAO.getUserID(comment.getOwnerUser().getUsername());
+            if (userId == -1) {
+                return false;
+            }
+            ps.setInt(1, userId);
+            ps.setInt(2, comment.getImageId());
+            ps.setString(3, comment.getText());
+            ps.execute();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
 }
