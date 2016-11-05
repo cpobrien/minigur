@@ -45,18 +45,18 @@ public class UserDAO {
             PreparedStatement ps = c.prepareStatement("SELECT * FROM minigur.UserCredentials WHERE login = ? AND password = ?");
             ps.setString(1, username);
             ps.setString(2, encodedPassword);
-            ResultSet rs = ps.executeQuery();
+            ResultSet rsLogin = ps.executeQuery();
 
-            if (rs.next()) {
+            if (rsLogin.next()) {
                 //Get user and return
                 ps = c.prepareStatement("SELECT * FROM minigur.User WHERE login = ?");
                 ps.setString(1, username);
-                rs = ps.executeQuery();
+                ResultSet rsUser = ps.executeQuery();
 
-                return rs.next();
+                return rsUser.next();
             } else {
                 //Otherwise return
-                return rs.next();
+                return rsLogin.next();
             }
         } catch (SQLException e) {
             e.printStackTrace();
