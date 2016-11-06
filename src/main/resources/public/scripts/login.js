@@ -14,6 +14,7 @@ function sendData(location) {
     }
     fetch(location, {
       method: "POST",
+      credentials: "include",
       body: JSON.stringify(payload),
       headers: new Headers({
         "Content-Type": "application/json"

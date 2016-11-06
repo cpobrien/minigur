@@ -21,6 +21,8 @@ public class SiteRenderController {
 
     @GetMapping("/")
     String home(HttpServletRequest request) {
+        System.out.println(request.getSession().getAttribute("foo"));
+        request.getSession().setAttribute("foo", "bar");
         if (redirectToLogin(request)) {
             return "login";
         }

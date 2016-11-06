@@ -33,26 +33,14 @@ public class UserDAO {
 
     public Boolean checkPassword(UserSessionRequest request) {
         String username = request.getUsername();
-        String encodedPassword = new BCryptPasswordEncoder().encode(request.getPassword());
-
         try (Connection c = environment.getJdbcManager().connect()){
-            //Validate login
-            PreparedStatement ps = c.prepareStatement("SELECT * FROM minigur.UserCredentials WHERE login = ? AND password = ?");
+            PreparedStatement ps = c.prepareStatement("SELECT password FROM minigur.UserCredentials WHERE login = ?");
             ps.setString(1, username);
-            ps.setString(2, encodedPassword);
             ResultSet rsLogin = ps.executeQuery();
-
-            if (rsLogin.next()) {
-                //Get user and return
-                ps = c.prepareStatement("SELECT * FROM minigur.User WHERE login = ?");
-                ps.setString(1, username);
-                ResultSet rsUser = ps.executeQuery();
-
-                return rsUser.next();
-            } else {
-                //Otherwise return
-                return rsLogin.next();
+            if (!rsLogin.next()) {
+                return false;
             }
+            return new BCryptPasswordEncoder().matches(request.getPassword(), rsLogin.getString("password"));
         } catch (SQLException e) {
             e.printStackTrace();
         }

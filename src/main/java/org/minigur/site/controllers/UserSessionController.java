@@ -10,9 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-
 @RestController
 @RequestMapping("/")
 public class UserSessionController {
@@ -22,7 +19,7 @@ public class UserSessionController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     Boolean login(HttpServletRequest request, @RequestBody UserSessionRequest userSessionRequest) {
-        Boolean alreadyLoggedIn = request.getAttribute("user") != null;
+        Boolean alreadyLoggedIn = request.getSession().getAttribute("user") != null;
         if (alreadyLoggedIn) {
             return false;
         }
@@ -30,17 +27,17 @@ public class UserSessionController {
             return false;
         }
         User currentUser = new User(userSessionRequest.getUsername(), false);
-        request.setAttribute("user", currentUser);
+        request.getSession().setAttribute("user", currentUser);
         return true;
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
     Boolean logout(HttpServletRequest request) {
-        Boolean notLoggedIn = request.getAttribute("user") == null;
+        Boolean notLoggedIn = request.getSession().getAttribute("user") == null;
         if (notLoggedIn) {
             return false;
         }
-        request.removeAttribute("user");
+        request.getSession().removeAttribute("user");
         return true;
     }
 }
