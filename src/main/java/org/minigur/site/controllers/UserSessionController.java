@@ -1,6 +1,7 @@
 package org.minigur.site.controllers;
 
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
+import org.minigur.site.Environment;
 import org.minigur.site.models.User;
 import org.minigur.site.models.UserSessionRequest;
 import org.minigur.site.service.UserDAO;

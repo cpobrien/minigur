@@ -18,13 +18,15 @@ public class UserDAO {
 
     public User getUser(String username) {
         try (Connection c = environment.getJdbcManager().connect()) {
-            PreparedStatement ps = c.prepareStatement("SELECT is_admin FROM minigur.User WHERE login = ?");
+            PreparedStatement ps = c.prepareStatement("SELECT is_admin FROM minigur.User WHERE username = ?");
             ps.setString(1, username);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 Boolean isAdmin = rs.getBoolean("is_admin");
+                ps.close();
                 return new User(username, isAdmin);
             }
+            ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -34,7 +36,7 @@ public class UserDAO {
     public Boolean checkPassword(UserSessionRequest request) {
         String username = request.getUsername();
         try (Connection c = environment.getJdbcManager().connect()){
-            PreparedStatement ps = c.prepareStatement("SELECT password FROM minigur.UserCredentials WHERE login = ?");
+            PreparedStatement ps = c.prepareStatement("SELECT password FROM minigur.UserCredentials WHERE username = ?");
             ps.setString(1, username);
             ResultSet rsLogin = ps.executeQuery();
             if (!rsLogin.next()) {

@@ -24,6 +24,7 @@ public class UserController {
         if (userLoggedIn) {
             return false;
         }
+        request.getSession().setAttribute("user", new User(userCreationRequest.getUsername(), false));
         return userDao.createUser(userCreationRequest);
     }
 

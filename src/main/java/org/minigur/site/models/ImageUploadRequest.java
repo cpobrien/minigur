@@ -1,10 +1,14 @@
 package org.minigur.site.models;
 
+
 import org.springframework.web.multipart.MultipartFile;
 
 public class ImageUploadRequest {
     private MultipartFile image;
     private String title;
+
+    public ImageUploadRequest() {
+    }
 
     public ImageUploadRequest(MultipartFile image, String title) {
         this.image = image;

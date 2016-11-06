@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS User (
 CREATE TABLE IF NOT EXISTS Image (
   id INT(11) NOT NULL AUTO_INCREMENT,
   filename VARCHAR(256),
+  title VARCHAR (256),
   upload_time DATETIME DEFAULT CURRENT_TIMESTAMP,
   owner_user INT(11),
   PRIMARY KEY (id),
@@ -47,8 +48,8 @@ CREATE TABLE IF NOT EXISTS TagRelations (
   image_id INT(11),
   tag_id INT(11),
   PRIMARY KEY (id),
-  FOREIGN KEY (image_id) REFERENCES Image (id),
-  FOREIGN KEY (tag_id) REFERENCES Tag (id)
+  FOREIGN KEY (image_id) REFERENCES Image (id) ON DELETE CASCADE,
+  FOREIGN KEY (tag_id) REFERENCES Tag (id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Rating (
@@ -62,15 +63,15 @@ CREATE TABLE IF NOT EXISTS Rating (
 );
 
 # Adding 5 User Credentials
-INSERT INTO UserCredentials (username, password)
+INSERT INTO UserCredentials (password, username)
 VALUES ('b123', 'bob123');
-INSERT INTO UserCredentials (username, password)
+INSERT INTO UserCredentials (password, username)
 VALUES ('69forlife', 'mary27');
-INSERT INTO UserCredentials (username, password)
+INSERT INTO UserCredentials (password, username)
 VALUES ('howudoin', 'joe2');
-INSERT INTO UserCredentials (username, password)
+INSERT INTO UserCredentials (password, username)
 VALUES ('chicken', 'jane');
-INSERT INTO UserCredentials (username, password)
+INSERT INTO UserCredentials (password, username)
 VALUES ('wut27', 'rolf');
 
 # Adding 5 Users
@@ -144,5 +145,3 @@ INSERT INTO Rating (user_id, image_id, is_upvote)
 VALUES (4, 4, true);
 INSERT INTO Rating (user_id, image_id, is_upvote)
 VALUES (5, 3, false);
-
-
