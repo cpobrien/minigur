@@ -31,7 +31,7 @@ public class UserSessionController {
         return true;
     }
 
-    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    @RequestMapping(value = "/signout", method = RequestMethod.POST)
     Boolean logout(HttpServletRequest request) {
         Boolean notLoggedIn = request.getSession().getAttribute("user") == null;
         if (notLoggedIn) {

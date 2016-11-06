@@ -2,17 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8"/>
-    <title>Hello, World!</title>
-
+    <title>Minigur | Home</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css"
           integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous"/>
     <link rel="stylesheet" href="css/main.css"/>
 </head>
 <body>
-<nav class="nav-header">
-    <div class="container">
-        <h3>Upload an Image</h3>
+<div class="container normal-container margin">
+    <div class="row">
+        <div class="col-md-6">
+            <a href="/user">My Account</a>
+        </div>
+        <div class="col-md-6">
+            <div class="right">
+                <a id="logout" href="#">Log Out</a>
+            </div>
+        </div>
     </div>
+</div>
+<nav class="nav-header margin">
+    <h3>Upload an Image</h3>
 </nav>
 <div class="container normal-container">
     <form id="image-upload" method="post" action="/image">
@@ -28,7 +37,22 @@
     </form>
     <button id="submit" class="btn btn-primary">Submit</button>
 </div>
+<nav class="nav-header margin">
+    <h3>Search for an Image</h3>
+</nav>
+<div class="container normal-container">
+    <div class="input-group">
+        <input type="text" class="form-control" placeholder="Search for..."/>
+        <span class="input-group-btn">
+        <button class="btn btn-primary" type="button">Search!</button>
+      </span>
+    </div>
+</div>
+<nav class="nav-header margin">
+    <h3>Recently Uploaded Images</h3>
+</nav>
 </body>
+<script src="/scripts/main.js"/>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js"
         integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK"

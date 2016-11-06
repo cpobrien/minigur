@@ -16,13 +16,11 @@ public class SiteRenderController {
     Environment environment;
 
     private Boolean redirectToLogin(HttpServletRequest request) {
-        return request.getAttribute("user") == null;
+        return request.getSession().getAttribute("user") == null;
     }
 
     @GetMapping("/")
     String home(HttpServletRequest request) {
-        System.out.println(request.getSession().getAttribute("foo"));
-        request.getSession().setAttribute("foo", "bar");
         if (redirectToLogin(request)) {
             return "login";
         }

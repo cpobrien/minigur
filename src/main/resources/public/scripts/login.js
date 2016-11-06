@@ -24,7 +24,9 @@ function sendData(location) {
     }).then(function (successful) {
       if (!successful) {
         error("Invalid username or password.");
+        return;
       }
+      window.location.reload();
     });
   }
 }
@@ -37,6 +39,13 @@ function error(message) {
   `;
 }
 (function () {
-  document.getElementById("login").addEventListener("click", sendData("/login"));
   document.getElementById("register").addEventListener("click", sendData("/user_api"));
+  document.getElementById("login").addEventListener("click", sendData("/login"));
+  document.querySelectorAll("#password, #username").forEach(function(element) {
+    element.addEventListener("keypress", function(e) {
+      if (e.keyCode === 13) {
+        sendData("/login")();
+      }
+    });
+  });
 })();

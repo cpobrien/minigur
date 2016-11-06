@@ -1,13 +1,21 @@
 .normal-container {
-    max-width: 540px;
+    width: 540px;
 }
 
 .nav-header {
     background-color: #0275d8;
     padding: 10px;
-    margin: 10px 0px;
     color: #FFF;
     text-align: center;
+}
+
+.margin {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.right {
+    text-align: right;
 }
 
 .login-container {
