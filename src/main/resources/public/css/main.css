@@ -69,6 +69,16 @@ text-align: center;
     text-align: center;
 }
 
+.comment-box {
+    border: 1px solid #0275d8;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.comment-lister {
+    color: #0275d8;
+}
+
 .margin {
     margin-top: 10px;
     margin-bottom: 10px;

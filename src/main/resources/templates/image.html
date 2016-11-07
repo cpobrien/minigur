@@ -22,9 +22,10 @@
     </div>
 </div>
 <div class="container normal-container">
-    <div class="image-block centered top">
+    <div class="image-block centered">
         <h1 class="image-title" th:text="${image.imageTitle}"/>
-        <a th:href="${'user/' + image.imageOwner.username}" th:text="${image.imageOwner.username}" class="user-link force-right"/>
+        <a th:href="${'user/' + image.imageOwner.username}" th:text="${image.imageOwner.username}"
+           class="user-link force-right"/>
     </div>
     <div class="img-div">
         <a th:href="${'https://s3-us-west-2.amazonaws.com/minigur/' + image.imageUrl + '.jpg'}">
@@ -33,10 +34,18 @@
     </div>
 </div>
 <div class="container normal-container">
-    <div class="image-block bottom">
+    <div class="image-block">
         <i class="fa fa-arrow-circle-up fa-3x icon" aria-hidden="true"></i>
         <i class="fa fa-arrow-circle-down fa-3x icon" aria-hidden="true"></i>
     </div>
+    <p class="comment-lister margin">0 COMMENTS</p>
+    <div class="input-group">
+        <input type="text" class="form-control" placeholder="Write a comment"/>
+        <span class="input-group-btn">
+        <button class="btn btn-primary" type="button">Post</button>
+      </span>
+    </div>
+
 </div>
 </body>
 <script src="https://use.fontawesome.com/ae29b6f194.js"></script>
