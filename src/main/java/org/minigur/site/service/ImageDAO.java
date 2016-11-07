@@ -49,6 +49,7 @@ public class ImageDAO {
             String imageTitle = resultSet.getString("title");
             Date uploadTime = resultSet.getDate("upload_time");
             String username = resultSet.getString("username");
+            connection.close();
             return new Image(imageUrl, imageTitle, uploadTime, new User(username, false));
         } catch (SQLException e) {
             e.printStackTrace();
@@ -73,6 +74,7 @@ public class ImageDAO {
                 Image image = new Image(filename, title, uploadTime, new User(username, false));
                 images.add(image);
             }
+            connection.close();
             return images;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -97,6 +99,7 @@ public class ImageDAO {
             ps.setInt(2, userDAO.getUserID(username));
             ps.setString(3, title);
             ps.execute();
+            connection.close();
             return randomString;
         } catch (IOException | SQLException e) {
             e.printStackTrace();

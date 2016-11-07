@@ -6,28 +6,40 @@
     <link rel="stylesheet" type="text/css" href="/css/main.css"/>
 </head>
 <body>
-<div class="container normal-container margin">
+<div class="container normal-container margin top">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4 nav-link">
             <a href="/user">My Account</a>
         </div>
-        <div class="col-md-6">
-            <div class="right">
+        <div class="col-md-4 nav-link">
+            <a href="/">Minigur</a>
+        </div>
+        <div class="col-md-4 nav-link">
+            <div>
                 <a id="logout" href="#">Log Out</a>
             </div>
         </div>
     </div>
 </div>
 <div class="container normal-container">
-    <div class="image-title">
-        <h1 th:text="${image.imageTitle}"/>
+    <div class="image-block centered top">
+        <h1 class="image-title" th:text="${image.imageTitle}"/>
+        <a th:href="${'user/' + image.imageOwner.username}" th:text="${image.imageOwner.username}" class="user-link force-right"/>
     </div>
     <div class="img-div">
-        <img class="img-fluid" th:src="${'https://s3-us-west-2.amazonaws.com/minigur/' + image.imageUrl + '.jpg'}"/>
+        <a th:href="${'https://s3-us-west-2.amazonaws.com/minigur/' + image.imageUrl + '.jpg'}">
+            <img class="img-fluid" th:src="${'https://s3-us-west-2.amazonaws.com/minigur/' + image.imageUrl + '.jpg'}"/>
+        </a>
+    </div>
+</div>
+<div class="container normal-container">
+    <div class="image-block bottom">
+        <i class="fa fa-arrow-circle-up fa-3x icon" aria-hidden="true"></i>
+        <i class="fa fa-arrow-circle-down fa-3x icon" aria-hidden="true"></i>
     </div>
 </div>
 </body>
+<script src="https://use.fontawesome.com/ae29b6f194.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="/scripts/login.js"></script>
 </html>

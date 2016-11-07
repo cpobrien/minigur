@@ -2,11 +2,60 @@
     width: 540px;
 }
 
-.image-title {
+.image-block {
     background-color: #0275d8;
     padding: 5px;
-    text-align: center;
     color: white;
+}
+
+.icon {
+    margin: 0px 5px;
+}
+
+.icon:hover {
+    cursor: pointer;
+}
+
+.nav-link {
+    text-align: center;
+}
+
+.image-title {
+    display: inline;
+}
+
+.user-link {
+    color: white;
+}
+
+.user-link:hover {
+    color:white;
+}
+
+
+.force-right {
+    float: right;
+
+}
+
+.top {
+    border-radius: 10px 10px 0 0;
+}
+
+.bottom {
+    border-radius: 0 0 10px 10px;
+}
+
+.fa-arrow-circle-up:hover {
+    color: #5cb85c;
+}
+
+.fa-arrow-circle-down:hover {
+    color: #d9534f;
+}
+
+.centered {
+text-align: center;
 }
 
 .img-div {
