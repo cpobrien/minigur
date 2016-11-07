@@ -1,13 +1,20 @@
 package org.minigur.site.models;
 
+import java.sql.Date;
+
 public class Image {
     String imageUrl;
     String imageTitle;
+    Date uploadDate;
     User imageOwner;
 
-    public Image(String imageUrl, String imageTitle, User imageOwner) {
+    public Image() {
+    }
+
+    public Image(String imageUrl, String imageTitle, Date uploadDate, User imageOwner) {
         this.imageUrl = imageUrl;
         this.imageTitle = imageTitle;
+        this.uploadDate = uploadDate;
         this.imageOwner = imageOwner;
     }
 
@@ -33,5 +40,13 @@ public class Image {
 
     public void setImageOwner(User imageOwner) {
         this.imageOwner = imageOwner;
+    }
+
+    public Date getUploadDate() {
+        return uploadDate;
+    }
+
+    public void setUploadDate(Date uploadDate) {
+        this.uploadDate = uploadDate;
     }
 }

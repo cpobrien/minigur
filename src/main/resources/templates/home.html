@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
     <title>Minigur | Home</title>
@@ -50,10 +50,19 @@
 <nav class="nav-header margin">
     <h3>Recently Uploaded Images</h3>
 </nav>
+<div class="container normal-container">
+    <div class="gallery">
+        <figure class="fig" th:each="image : ${images}">
+            <a th:href="${image.imageUrl}">
+                <img class="thumbnail rounded"
+                     th:style="${'background-image: url(https://s3-us-west-2.amazonaws.com/minigur/' + image.imageUrl + '.jpg)'}"/>
+            </a>
+            <figcaption class="figure-caption text-xs-right" th:text="${image.imageTitle + ' | ' + image.imageOwner.username}"/>
+
+        </figure>
+    </div>
+
+</div>
 </body>
 <script src="/scripts/main.js"/>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js"
-        integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK"
-        crossorigin="anonymous"></script>
 </html>

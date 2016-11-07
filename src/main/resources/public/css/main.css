@@ -18,6 +18,24 @@
     text-align: right;
 }
 
+.gallery {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+
+.thumbnail {
+    width: 240px;
+    height: 240px;
+    overflow-x: visible;
+    overflow-y: visible;
+    background-size: 100% auto;
+}
+
+.fig {
+    padding: 5px;
+}
+
 .login-container {
     max-width: 350px;
 }
