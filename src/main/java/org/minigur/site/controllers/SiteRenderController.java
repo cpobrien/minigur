@@ -2,6 +2,7 @@ package org.minigur.site.controllers;
 
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.minigur.site.Environment;
+import org.minigur.site.models.Image;
 import org.minigur.site.service.ImageDAO;
 import org.minigur.site.service.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +35,12 @@ public class SiteRenderController {
     }
 
     @GetMapping("/{imageId}")
-    String viewImage(HttpServletRequest request) {
+    String viewImage(HttpServletRequest request, Model model, @PathVariable("imageId") String imageId) {
         if (redirectToLogin(request)) {
             return "login";
         }
+        Image image = imageDAO.findImage(imageId);
+        model.addAttribute("image", image);
         return "image";
     }
 

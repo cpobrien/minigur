@@ -2,6 +2,17 @@
     width: 540px;
 }
 
+.image-title {
+    background-color: #0275d8;
+    padding: 5px;
+    text-align: center;
+    color: white;
+}
+
+.img-div {
+    text-align: center;
+}
+
 .nav-header {
     background-color: #0275d8;
     padding: 10px;

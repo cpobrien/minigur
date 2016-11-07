@@ -1,0 +1,33 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${image.imageTitle + '| Minigur'}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css"
+          integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous"/>
+    <link rel="stylesheet" type="text/css" href="/css/main.css"/>
+</head>
+<body>
+<div class="container normal-container margin">
+    <div class="row">
+        <div class="col-md-6">
+            <a href="/user">My Account</a>
+        </div>
+        <div class="col-md-6">
+            <div class="right">
+                <a id="logout" href="#">Log Out</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container normal-container">
+    <div class="image-title">
+        <h1 th:text="${image.imageTitle}"/>
+    </div>
+    <div class="img-div">
+        <img class="img-fluid" th:src="${'https://s3-us-west-2.amazonaws.com/minigur/' + image.imageUrl + '.jpg'}"/>
+    </div>
+</div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="/scripts/login.js"></script>
+</html>
