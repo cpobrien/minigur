@@ -1,22 +1,12 @@
 package org.minigur.site.models;
 
 public class RatingData {
-    Double ratingAverage;
     Integer numberOfUpvotes;
     Integer numberOfDownvotes;
 
-    public RatingData(Double ratingAverage, Integer numberOfUpvotes, Integer numberOfDownvotes) {
-        this.ratingAverage = ratingAverage;
+    public RatingData(Integer numberOfUpvotes, Integer numberOfDownvotes) {
         this.numberOfUpvotes = numberOfUpvotes;
         this.numberOfDownvotes = numberOfDownvotes;
-    }
-
-    public Double getRatingAverage() {
-        return ratingAverage;
-    }
-
-    public void setRatingAverage(Double ratingAverage) {
-        this.ratingAverage = ratingAverage;
     }
 
     public Integer getNumberOfUpvotes() {
