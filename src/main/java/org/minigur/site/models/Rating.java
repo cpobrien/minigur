@@ -3,6 +3,9 @@ package org.minigur.site.models;
 public class Rating {
     Boolean rating;
 
+    public Rating() {
+    }
+
     public Rating(Boolean rating) {
         this.rating = rating;
     }
