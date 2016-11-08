@@ -31,8 +31,8 @@ public class RatingDAO {
         RatingData result = null;
         try (Connection connection = environment.getJdbcManager().connect()) {
             PreparedStatement statement = connection.prepareStatement("SELECT COUNT(Rating.is_upvote) AS Downvotes " +
-                    "FROM minigur.Rating, minigur.Image" +
-                    "WHERE Image.filename = '?' AND Image.id = Rating.image_id AND Rating.is_upvote = 0;");
+                    "FROM minigur.Rating, minigur.Image " +
+                    "WHERE filename = ? AND Image.id = Rating.image_id AND Rating.is_upvote = 0;");
             statement.setString(1, imageID);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -44,8 +44,8 @@ public class RatingDAO {
         }
         try (Connection connection = environment.getJdbcManager().connect()) {
             PreparedStatement statement = connection.prepareStatement("SELECT COUNT(Rating.is_upvote) AS Upvotes " +
-                    "FROM minigur.Rating, minigur.Image" +
-                    "WHERE Image.filename = '?' AND Image.id = Rating.image_id AND Rating.is_upvote = 1;");
+                    "FROM minigur.Rating, minigur.Image " +
+                    "WHERE filename = ? AND Image.id = Rating.image_id AND Rating.is_upvote = 1;");
             statement.setString(1, imageID);
             ResultSet resultSet = statement.executeQuery();
 
