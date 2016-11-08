@@ -4,6 +4,7 @@ import org.minigur.site.Environment;
 import org.minigur.site.models.Rating;
 import org.minigur.site.models.RatingData;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.sql.*;
 
@@ -11,9 +12,16 @@ import java.sql.*;
 /**
  * Rating DAO accesses rating information from the database
  */
+@Component
 public class RatingDAO {
     @Autowired
     Environment environment;
+
+    @Autowired
+    UserDAO userDAO;
+
+    @Autowired
+    ImageDAO imageDAO;
     /**
      * Get Rating gets the rating information for a specific imageID
      */
@@ -54,19 +62,20 @@ public class RatingDAO {
     public Boolean postRating (Boolean is_upvote, String imageID, String userID) {
         try (Connection connection = environment.getJdbcManager().connect()) {
             PreparedStatement ps = connection.prepareStatement("INSERT INTO minigur.Rating (user_id, image_id, is_upvote) VALUES (?, ?, ?);");
-            statement.setString(1, userID);
-            statement.setString(2, imageID);
+            ps.setInt(1, userDAO.getUserID(userID));
+            ps.setInt(2, imageDAO.getImageId(imageID));
             if (is_upvote) {
-                statement.setInt(3, 1);
+                ps.setInt(3, 1);
             } else {
-                statement.setInt(3, 0);
+                ps.setInt(3, 0);
             }
-            statement.executeQuery();
+            ps.execute();
             connection.close();
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return true;
+        return false;
     }
 
 }

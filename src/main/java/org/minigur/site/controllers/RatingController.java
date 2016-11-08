@@ -3,13 +3,15 @@ package org.minigur.site.controllers;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.minigur.site.models.Rating;
 import org.minigur.site.models.RatingData;
+import org.minigur.site.models.User;
+import org.minigur.site.service.RatingDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class RatingController {
-//    @Autowired
-//    RatingDAO ratingDAO;
+    @Autowired
+    RatingDAO ratingDAO;
     /**
      * Posts a rating to an image. Requires a user to be logged in.
      * @param request The HTTP Request. Contains information about the current user logged in.
@@ -23,7 +25,7 @@ public class RatingController {
         if (!userLoggedIn) {
             return false;
         }
-//        ratingDAO.postRating;
+        ratingDAO.postRating(rating.getRating(), imageId, ((User) request.getSession().getAttribute("user")).getUsername());
         return true;
     }
 
