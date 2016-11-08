@@ -53,11 +53,10 @@ CREATE TABLE IF NOT EXISTS TagRelations (
 );
 
 CREATE TABLE IF NOT EXISTS Rating (
-  rating_id INT(11) NOT NULL AUTO_INCREMENT,
   user_id INT(11),
   image_id INT(11),
   is_upvote BOOLEAN,
-  PRIMARY KEY (rating_id),
+  PRIMARY KEY (user_id, image_id),
   FOREIGN KEY (user_id) REFERENCES User (id),
   FOREIGN KEY (image_id) REFERENCES Image (id) ON DELETE CASCADE
 );

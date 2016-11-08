@@ -61,7 +61,7 @@ public class RatingDAO {
 
     public Boolean postRating (Boolean is_upvote, String imageID, String userID) {
         try (Connection connection = environment.getJdbcManager().connect()) {
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO minigur.Rating (user_id, image_id, is_upvote) VALUES (?, ?, ?);");
+            PreparedStatement ps = connection.prepareStatement("REPLACE INTO minigur.Rating (user_id, image_id, is_upvote) VALUES (?, ?, ?);");
             ps.setInt(1, userDAO.getUserID(userID));
             ps.setInt(2, imageDAO.getImageId(imageID));
             if (is_upvote) {
