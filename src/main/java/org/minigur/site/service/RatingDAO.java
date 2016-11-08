@@ -50,7 +50,7 @@ public class RatingDAO {
         }
         return result;
     }
-// not done
+
     public Boolean postRating (Boolean is_upvote, String imageID, String userID) {
         try (Connection connection = environment.getJdbcManager().connect()) {
             PreparedStatement ps = connection.prepareStatement("INSERT INTO minigur.Rating (user_id, image_id, is_upvote) VALUES (?, ?, ?);");
@@ -61,15 +61,12 @@ public class RatingDAO {
             } else {
                 statement.setInt(3, 0);
             }
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                downvotes = resultSet.getInt("Downvotes");
-            }
+            statement.executeQuery();
             connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
+        return true;
     }
 
 }
