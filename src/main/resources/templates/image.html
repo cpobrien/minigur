@@ -34,11 +34,11 @@
     </div>
 </div>
 <div class="container normal-container">
-    <div class="image-block">
+    <div class="image-block clearfix">
         <i class="fa fa-arrow-circle-up fa-3x icon" id="upvote" aria-hidden="true"></i>
-        <span th:text="${upvotes + ' UPVOTES'}"/>
+        <span class="vote-text" th:text="${upvotes + ' UPVOTES'}"/>
         <i class="fa fa-arrow-circle-down fa-3x icon" id="downvote" aria-hidden="true"></i>
-        <span th:text="${downvotes + ' D:wOWNVOTES'}"/>
+        <span class="vote-text" th:text="${downvotes + ' DOWNVOTES'}"/>
     </div>
     <p class="comment-lister margin" th:text="${commentSize + ' COMMENTS'}"/>
     <div class="input-group">

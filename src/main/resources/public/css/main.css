@@ -10,6 +10,7 @@
 
 .icon {
     margin: 0px 5px;
+    float: left;
 }
 
 .icon:hover {
@@ -117,3 +118,10 @@ text-align: center;
 .filter-container { 
     width: 50%!important; 
 }
+
+.vote-text {
+    display: block;
+    float: left;
+    margin: 15px;
+}
+
