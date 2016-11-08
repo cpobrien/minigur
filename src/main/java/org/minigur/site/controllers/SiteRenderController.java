@@ -2,8 +2,10 @@ package org.minigur.site.controllers;
 
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.minigur.site.Environment;
+import org.minigur.site.models.Comment;
 import org.minigur.site.models.Image;
 import org.minigur.site.models.User;
+import org.minigur.site.service.CommentDAO;
 import org.minigur.site.service.ImageDAO;
 import org.minigur.site.service.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 @Controller
 public class SiteRenderController {
@@ -21,6 +24,9 @@ public class SiteRenderController {
 
     @Autowired
     ImageDAO imageDAO;
+
+    @Autowired
+    CommentDAO commentDAO;
 
     private Boolean redirectToLogin(HttpServletRequest request) {
         return request.getSession().getAttribute("user") == null;
@@ -41,7 +47,10 @@ public class SiteRenderController {
             return "redirect:";
         }
         Image image = imageDAO.findImage(imageId);
+        List<Comment> comments = commentDAO.getComments(imageId);
         model.addAttribute("image", image);
+        model.addAttribute("comments", comments);
+        model.addAttribute("commentSize", comments.size());
         return "image";
     }
 

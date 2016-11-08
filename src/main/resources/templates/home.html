@@ -60,11 +60,12 @@
                 <img class="thumbnail rounded"
                      th:style="${'background-image: url(https://s3-us-west-2.amazonaws.com/minigur/' + image.imageUrl + '.jpg)'}"/>
             </a>
-            <figcaption class="figure-caption text-xs-right" th:text="${image.imageTitle + ' | ' + image.imageOwner.username}"/>
-
+            <figcaption class="figure-caption text-xs-right">
+                <span th:text="${image.imageTitle + ' | '}"/>
+                <a th:href="${'/user/' + image.imageOwner.username}" th:text="${image.imageOwner.username}"/>
+            </figcaption>
         </figure>
     </div>
-
 </div>
 </body>
 <script src="/scripts/main.js"/>

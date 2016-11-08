@@ -2,13 +2,19 @@ package org.minigur.site.controllers;
 
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.minigur.site.models.Comment;
+import org.minigur.site.models.CommentPostRequest;
 import org.minigur.site.models.User;
+import org.minigur.site.service.CommentDAO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 public class CommentController {
+    @Autowired
+    CommentDAO commentDAO;
+
     /**
      * Gets all comments for an image
      * @param imageId the image the comments are associated with.
@@ -27,12 +33,15 @@ public class CommentController {
      * @return whether the comment was successfully uploaded or not.
      */
     @RequestMapping(value = "/{imageId}/comment", method = RequestMethod.POST)
-    Boolean postComment(HttpServletRequest request, @PathVariable("imageId") String imageId, @RequestBody Comment comment) {
-        Boolean userLoggedIn = request.getAttribute("user") != null;
+    Boolean postComment(HttpServletRequest request, @PathVariable("imageId") String imageId, @RequestBody CommentPostRequest comment) {
+        Boolean userLoggedIn = request.getSession().getAttribute("user") != null;
         if (!userLoggedIn) {
             return false;
         }
-        return false;
+        return commentDAO.addComment(new Comment(comment.getText(),
+                (User) request.getSession().getAttribute("user"),
+                imageId,
+                null));
     }
 
     /**

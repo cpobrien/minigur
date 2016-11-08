@@ -38,17 +38,23 @@
         <i class="fa fa-arrow-circle-up fa-3x icon" aria-hidden="true"></i>
         <i class="fa fa-arrow-circle-down fa-3x icon" aria-hidden="true"></i>
     </div>
-    <p class="comment-lister margin">0 COMMENTS</p>
+    <p class="comment-lister margin" th:text="${commentSize + ' COMMENTS'}"/>
     <div class="input-group">
-        <input type="text" class="form-control" placeholder="Write a comment"/>
+        <input type="text" id="post-input" class="form-control" placeholder="Write a comment"/>
         <span class="input-group-btn">
-        <button class="btn btn-primary" type="button">Post</button>
+        <button class="btn btn-primary" id="post-button" type="button">Post</button>
       </span>
     </div>
-
+    <div class="margin" th:each="comment : ${comments}">
+        <blockquote class="blockquote">
+            <p class="mb-0" th:text="${comment.text}"/>
+        </blockquote>
+        <footer class="blockquote-footer" th:text="${'Written by ' + comment.ownerUser.username + ' on ' + comment.postedDate}"/>
+    </div>
 </div>
 </body>
 <script src="https://use.fontawesome.com/ae29b6f194.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="scripts/image.js"/>
 </html>

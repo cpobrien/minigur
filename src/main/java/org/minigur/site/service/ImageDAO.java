@@ -82,6 +82,22 @@ public class ImageDAO {
         return images;
     }
 
+    public Integer getImageId(String url) {
+        try {
+            Connection connection = environment.getJdbcManager().connect();
+            PreparedStatement ps = connection.prepareStatement("SELECT id FROM minigur.Image WHERE filename = ?;");
+            ps.setString(1, url);
+            ResultSet resultSet = ps.executeQuery();
+            if (!resultSet.next()) {
+                return null;
+            }
+            return resultSet.getInt("id");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public String uploadImage(MultipartFile image, String title, String username) {
         String randomString = generateBase62(RANDOM_STRING_SIZE);
         try {

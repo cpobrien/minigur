@@ -7,7 +7,7 @@ public class Comment {
     // TODO: not sure about the fields
     private String text;
     private User ownerUser;
-    private int imageId;
+    private String imageId;
     private Date postedDate;
 
     public String getText() {
@@ -26,11 +26,11 @@ public class Comment {
         this.ownerUser = ownerUser;
     }
 
-    public int getImageId() {
+    public String getImageId() {
         return imageId;
     }
 
-    public void setImageId(int imageId) {
+    public void setImageId(String imageId) {
         this.imageId = imageId;
     }
 
@@ -46,7 +46,7 @@ public class Comment {
         this.text = text;
     }
 
-    public Comment(String text, User ownerUser, int imageId, Date postedDate) {
+    public Comment(String text, User ownerUser, String imageId, Date postedDate) {
         this.text = text;
         this.ownerUser = ownerUser;
         this.imageId = imageId;
