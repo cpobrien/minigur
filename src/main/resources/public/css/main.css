@@ -109,3 +109,11 @@ text-align: center;
 .login-container {
     max-width: 350px;
 }
+
+.query-container { 
+    width: 50%!important; 
+}
+
+.filter-container { 
+    width: 50%!important; 
+}
