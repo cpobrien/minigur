@@ -74,7 +74,7 @@ public class SiteRenderController {
     @GetMapping("/search")
     String search(HttpServletRequest request, @RequestParam("query") String query) {
         if (redirectToLogin(request)) {
-            return "redirect:";
+            return "search";
         }
         return "search";
     }
