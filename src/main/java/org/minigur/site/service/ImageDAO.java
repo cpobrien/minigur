@@ -63,7 +63,7 @@ public class ImageDAO {
             Connection connection = environment.getJdbcManager().connect();
             PreparedStatement statement = connection.prepareStatement("SELECT filename, title, upload_time, username " +
                     "FROM minigur.Image, minigur.User " +
-                    "WHERE User.id = Image.owner_user ORDER BY upload_time ASC LIMIT ?;");
+                    "WHERE User.id = Image.owner_user ORDER BY upload_time DESC LIMIT ?;");
             statement.setInt(1, count);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
