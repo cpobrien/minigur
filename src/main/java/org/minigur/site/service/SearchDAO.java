@@ -64,5 +64,6 @@ public class SearchDAO {
             e.printStackTrace();
             return null;
         }
+        return null;
     }
 }
