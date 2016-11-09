@@ -33,6 +33,9 @@ public class SiteRenderController {
     @Autowired
     RatingDAO ratingDAO;
 
+    @Autowired
+    UserDAO userDAO;
+
     private Boolean redirectToLogin(HttpServletRequest request) {
         return request.getSession().getAttribute("user") == null;
     }
@@ -73,10 +76,20 @@ public class SiteRenderController {
     }
 
     @GetMapping("/user/{userId}")
-    String viewUser(HttpServletRequest request, @PathVariable("userId") String userId) {
+    String viewUser(HttpServletRequest request, Model model, @PathVariable("userId") String userId) {
         if (redirectToLogin(request)) {
             return "redirect:";
         }
+        User pageUser = userDAO.getUser(userId);
+        if (pageUser == null) {
+            return "redirect:";
+        }
+        User user = (User) request.getSession().getAttribute("user");
+        Boolean isCurrentUser = user.getUsername().equals(userId);
+        List<Image> images = imageDAO.getUserImages(userId);
+        model.addAttribute("user", pageUser);
+        model.addAttribute("isCurrentUser", isCurrentUser);
+        model.addAttribute("images", images);
         return "user";
     }
 
