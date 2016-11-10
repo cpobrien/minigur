@@ -10,6 +10,9 @@ public class SearchRequest {
     Boolean searchComment;
     Boolean searchTag;
 
+    public SearchRequest() {
+    }
+
     public SearchRequest(String searchString, Boolean searchTitle, Boolean searchUsername, Boolean searchComment, Boolean searchTag) {
         this.searchString = searchString;
         this.searchTitle = searchTitle;
