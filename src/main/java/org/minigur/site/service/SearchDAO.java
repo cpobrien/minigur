@@ -19,14 +19,14 @@ public class SearchDAO {
     public List<Image> searchImages(SearchRequest request) {
         List<Image> images = new ArrayList<>();
         String searchString = request.getSearchString().toLowerCase();
-        String searchUsername = request.getSearchUsername() == Boolean.TRUE ? "(SELECT i.id FROM minigur.Image i, minigur.User u" +
-                "WHERE i.owner_user = u.id AND LOWER(u.username) LIKE \'%" +  searchString + "%\')" : null;
-        String searchTag = request.getSearchTag() == Boolean.TRUE ? "(SELECT i.id FROM minigur.Image i, minigur.TagRelations tr, minigur.Tag t" +
-                "WHERE t.id = tr.id AND i.id = tr.id AND LOWER(t.name) LIKE \'%" + searchString + "%\')" : null;
-        String searchComment = request.getSearchTag() == Boolean.TRUE ? "(SELECT c.image_id FROM minigur.Comment c" +
-                "WHERE LOWER(c.text) LIKE \'%" + searchString + "%\')" : null;
-        String searchTitle = request.getSearchTag() == Boolean.TRUE ? "(SELECT i.id FROM minigur.Image i" +
-                "WHERE LOWER(i.title) LIKE \'%" + searchString + "%\')" : null;
+        String searchUsername = request.getSearchUsername() == Boolean.TRUE ? "SELECT i.id FROM minigur.Image i, minigur.User u" +
+                " WHERE i.owner_user = u.id AND LOWER(u.username) LIKE \'%" +  searchString + "%\'" : null;
+        String searchTag = request.getSearchTag() == Boolean.TRUE ? "SELECT i.id FROM minigur.Image i, minigur.TagRelations tr, minigur.Tag t" +
+                " WHERE t.id = tr.id AND i.id = tr.id AND LOWER(t.name) LIKE \'%" + searchString + "%\'" : null;
+        String searchComment = request.getSearchTag() == Boolean.TRUE ? "SELECT c.image_id FROM minigur.Comment c" +
+                " WHERE LOWER(c.text) LIKE \'%" + searchString + "%\'" : null;
+        String searchTitle = request.getSearchTag() == Boolean.TRUE ? "SELECT i.id FROM minigur.Image i" +
+                " WHERE LOWER(i.title) LIKE \'%" + searchString + "%\'" : null;
         String query = "SELECT * from minigur.Image i WHERE i.id IN (";
         List<String> searchQueries = new ArrayList<>();
         if (searchUsername != null) {
