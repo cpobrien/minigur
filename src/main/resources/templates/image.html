@@ -40,6 +40,14 @@
         <i class="fa fa-arrow-circle-down fa-3x icon" id="downvote" aria-hidden="true"></i>
         <span class="vote-text" th:text="${downvotes + ' DOWNVOTES'}"/>
     </div>
+    <div class="margin tag-box">
+        <th:block th:each="tag : ${tags}">
+            <span class="tag-element"><a th:href="${'/tag/' + tag.tag}" th:text="${tag.tag + ' [' + tag.count + ']'}"/> </span>
+        </th:block>
+        <form method="post" th:class="tag-input" th:action="${'/tag/' + image.imageUrl + '/'}">
+            <input type="text" class="form-control form-control-sm tag-form" name="tag" placeholder="Post a tag"/>
+        </form>
+    </div>
     <p class="comment-lister margin" th:text="${commentSize + ' COMMENTS'}"/>
     <div class="input-group">
         <input type="text" id="post-input" class="form-control" placeholder="Write a comment"/>

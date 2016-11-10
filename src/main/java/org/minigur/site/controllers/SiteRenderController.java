@@ -2,14 +2,8 @@ package org.minigur.site.controllers;
 
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.minigur.site.Environment;
-import org.minigur.site.models.Comment;
-import org.minigur.site.models.Image;
-import org.minigur.site.models.RatingData;
-import org.minigur.site.models.User;
-import org.minigur.site.service.CommentDAO;
-import org.minigur.site.service.ImageDAO;
-import org.minigur.site.service.RatingDAO;
-import org.minigur.site.service.UserDAO;
+import org.minigur.site.models.*;
+import org.minigur.site.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,6 +30,12 @@ public class SiteRenderController {
     @Autowired
     UserDAO userDAO;
 
+    @Autowired
+    TagDAO tagDAO;
+
+    @Autowired
+    SearchDAO searchDAO;
+
     private Boolean redirectToLogin(HttpServletRequest request) {
         return request.getSession().getAttribute("user") == null;
     }
@@ -56,6 +56,11 @@ public class SiteRenderController {
         }
         Image image = imageDAO.findImage(imageId);
         List<Comment> comments = commentDAO.getComments(imageId);
+        List<Tag> tags = tagDAO.getTags(imageId);
+        tags.forEach(tag -> {
+            System.out.println(tag.getTag());
+        });
+        model.addAttribute("tags", tags);
         model.addAttribute("image", image);
         model.addAttribute("comments", comments);
         model.addAttribute("commentSize", comments.size());
@@ -94,10 +99,22 @@ public class SiteRenderController {
     }
 
     @GetMapping("/search")
-    String search(HttpServletRequest request) {
+    String search(HttpServletRequest request,
+                  Model model,
+                  @RequestParam(value = "query", required = false) String query,
+                  @RequestParam(value = "comment", required = false) String comment,
+                  @RequestParam(value = "tag", required = false) String tag,
+                  @RequestParam(value = "user", required = false) String user) {
         if (redirectToLogin(request)) {
             return "redirect:";
         }
+        if (query == null) {
+            return "search";
+        }
+        SearchRequest searchRequest = new SearchRequest(query, true, user != null, comment != null, tag != null);
+        List<Image> images = searchDAO.searchImages(searchRequest);
+        model.addAttribute("request", searchRequest);
+        model.addAttribute("images", images);
         return "search";
     }
 }

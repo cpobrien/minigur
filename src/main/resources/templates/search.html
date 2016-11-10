@@ -1,23 +1,9 @@
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Search</title>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="/scripts/search.js"></script>
-
-    <link rel="stylesheet" type="text/css" href="/css/search.css"/>
-    <link rel="stylesheet" href="css/main.css"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
-
-    <script>
-        $(document).ready(function () {
-            $('.btn-search').on('click', function () {
-                executeSearch();
-            });
-        });
-    </script>
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css"
+          integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous"/>
+    <link rel="stylesheet" type="text/css" href="/css/main.css"/>
 </head>
 <body>
 <div class="container normal-container margin top">
@@ -35,35 +21,38 @@
         </div>
     </div>
 </div>
-
 <nav class="nav-header margin">
-    <h3>Search for an Image</h3>
+    <h1>Search for an Image</h1>
 </nav>
 
 <div class="container">
-    <div class="query-container container normal-container">
-        <div class="input-group">
-            <input id="query" type="text" class="form-control" placeholder="Search for..."/>
-            <span class="input-group-btn">
-                <button class="btn btn-primary btn-search" type="button">Search!</button>
+    <div class="container normal-container">
+        <form method="get" action="/search">
+            <div class="input-group">
+                <input id="query" name="query"  type="text" class="form-control" th:value="${request.searchString}" placeholder="Search for..."/>
+                <span class="input-group-btn">
+                <button class="btn btn-primary btn-search" type="submit ">Search!</button>
             </span>
-        </div>
+            </div>
+            <div class="margin">
+            <span>
+                Include in Query:
+            </span>
+                <label class="form-check-label">
+                    <input th:checked="${request.searchComment}" type="checkbox" class="form-check-input" name="comment" value="comment"/> Comments
+                </label>
+                <label class="form-check-label">
+                    <input th:checked="${request.searchTag}" type="checkbox" class="form-check-input" name="tag" value="tag"/> Tags
+                </label>
+                <label class="form-check-label">
+                    <input th:checked="${request.searchUsername}" type="checkbox" class="form-check-input" name="user" value="user"/> Usernames
+                </label>
+            </div>
+        </form>
     </div>
-
-    <div class="filter-container container normal-container">
-        <div class="input-group">
-            <input type="checkbox" id="everything" name="everything" value="everything">Everything</input>
-            <input type="checkbox" id="title" name="title" value="title">Title</input>
-            <input type="checkbox" id="comment" name="comment" value="comment">Comment</input>
-            <input type="checkbox" id="tag" name="tag" value="tag">Tag</input>
-            <input type="checkbox" id="user" name="user" value="user">User</input>
-        </div>
-    </div>
-
 </div>
-
 <div class="container normal-container">
-    <div class="result-gallery">
+    <div class="gallery">
         <figure class="fig" th:each="image : ${images}">
             <a th:href="${image.imageUrl}">
                 <img class="thumbnail rounded"
@@ -76,13 +65,5 @@
         </figure>
     </div>
 </div>
-
-<div class="search-results">
-    <div class="gallery">
-
-    </div>
-</div>
 </body>
-<script src="/scripts/main.js"/>
-
 </html>
