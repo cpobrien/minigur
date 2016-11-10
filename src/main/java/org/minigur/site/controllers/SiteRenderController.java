@@ -113,6 +113,7 @@ public class SiteRenderController {
         }
         SearchRequest searchRequest = new SearchRequest(query, true, user != null, comment != null, tag != null);
         List<Image> images = searchDAO.searchImages(searchRequest);
+        model.addAttribute("request", searchRequest);
         model.addAttribute("images", images);
         return "search";
     }

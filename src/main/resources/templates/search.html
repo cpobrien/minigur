@@ -29,7 +29,7 @@
     <div class="container normal-container">
         <form method="get" action="/search">
             <div class="input-group">
-                <input id="query" name="query"  type="text" class="form-control" placeholder="Search for..."/>
+                <input id="query" name="query"  type="text" class="form-control" th:value="${request.searchString}" placeholder="Search for..."/>
                 <span class="input-group-btn">
                 <button class="btn btn-primary btn-search" type="submit ">Search!</button>
             </span>
@@ -39,13 +39,13 @@
                 Include in Query:
             </span>
                 <label class="form-check-label">
-                    <input type="checkbox" class="form-check-input" id="comment" name="comment" value="everything"/> Comments
+                    <input th:checked="${request.searchComment}" type="checkbox" class="form-check-input" name="comment" value="comment"/> Comments
                 </label>
                 <label class="form-check-label">
-                    <input type="checkbox" class="form-check-input" id="tag" name="tag" value="tag"/> Tags
+                    <input th:checked="${request.searchTag}" type="checkbox" class="form-check-input" name="tag" value="tag"/> Tags
                 </label>
                 <label class="form-check-label">
-                    <input type="checkbox" class="form-check-input" id="user" name="user" value="user"/> Usernames
+                    <input th:checked="${request.searchUsername}" type="checkbox" class="form-check-input" name="user" value="user"/> Usernames
                 </label>
             </div>
         </form>

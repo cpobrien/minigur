@@ -1,8 +1,5 @@
 package org.minigur.site.models;
 
-
-import com.sun.org.apache.xpath.internal.operations.Bool;
-
 public class SearchRequest {
     String searchString;
     Boolean searchTitle;
@@ -22,7 +19,6 @@ public class SearchRequest {
     }
 
     public String getSearchString() {
-
         return searchString;
     }
 
