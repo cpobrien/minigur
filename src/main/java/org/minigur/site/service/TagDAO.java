@@ -27,7 +27,7 @@ public class TagDAO {
         List<Tag> tags = new ArrayList<>();
         try {
             Connection connection = environment.getJdbcManager().connect();
-            PreparedStatement statement = connection.prepareStatement("SELECT name tag, COUNT(name) count FROM minigur.Tag t, minigur.Image i, minigur.TagRelations r WHERE t.id = r.tag_id AND i.filename = ? AND i.id = r.image_id GROUP BY name ORDER BY count DESCt st;");
+            PreparedStatement statement = connection.prepareStatement("SELECT name tag, COUNT(name) count FROM minigur.Tag t, minigur.Image i, minigur.TagRelations r WHERE t.id = r.tag_id AND i.filename = ? AND i.id = r.image_id GROUP BY name ORDER BY count DESC;");
             statement.setString(1, imageId);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
