@@ -30,20 +30,25 @@ function executeSearch() {
 			filters.user = true;
 		}
 	} 
-	
+
+	var data = {
+      searchString: query,
+      searchTitle: filters.title,
+      searchComment: filters.comment,
+      searchTag: filters.tag,
+      searchUsername: filters.user
+   };
+
 	if (query === null || query === '') {
 		alert('Please enter a query.');
 	} else {
 		$.ajax({
-		   url: '/search/',
+		   url: '/query',
 		   type: 'POST',
-		   data: {
-		   	  searchString: query,
-		      searchTitle: filters.title,
-		      searchComment: filters.comment,
-		      searchTag: filters.tag,
-		      searchUsername: filters.user
-		   },
+		   headers: {
+               'Content-Type': 'application/json'
+           },
+		   data: JSON.stringify(data),
 		   success: function(data) {
 		     
 		   },
