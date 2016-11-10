@@ -41,7 +41,7 @@ public class CommentController {
         return commentDAO.addComment(new Comment(comment.getText(),
                 (User) request.getSession().getAttribute("user"),
                 imageId,
-                null));
+                null, null));
     }
 
     /**
