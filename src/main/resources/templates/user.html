@@ -5,7 +5,7 @@
     <title>Minigur | Home</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css"
           integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous"/>
-    <link rel="stylesheet" href="css/main.css"/>
+    <link rel="stylesheet" href="/css/main.css"/>
 </head>
 <body>
 <div class="container normal-container margin top">
@@ -24,39 +24,15 @@
     </div>
 </div>
 <nav class="nav-header margin">
-    <h3>Upload an Image</h3>
-</nav>
-<div class="container normal-container">
-    <form id="image-upload" method="post" enctype="multipart/form-data" action="/image">
-        <div class="form-group">
-            <label for="title">Title of the Image</label>
-            <input type="text" class="form-control" name="title" id="title"/>
-        </div>
-        <div class="form-group">
-            <label for="image-file">Image to Upload (Max 1 MB)</label>
-            <input name="file" type="file" class="form-control-file" id="image-file"/>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-</div>
-<nav class="nav-header margin">
-    <h3>Search for an Image</h3>
-</nav>
-<div class="container normal-container">
-    <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search for..."/>
-        <span class="input-group-btn">
-        <button class="btn btn-primary" type="button">Search!</button>
-      </span>
-    </div>
-</div>
-<nav class="nav-header margin">
-    <h3>Recently Uploaded Images</h3>
+    <h3>
+        <span>Images posted by </span>
+        <span th:text="${user.username}"/>
+    </h3>
 </nav>
 <div class="container normal-container">
     <div class="gallery">
         <figure class="fig" th:each="image : ${images}">
-            <a th:href="${image.imageUrl}">
+            <a th:href="${'/' + image.imageUrl}">
                 <img class="thumbnail rounded"
                      th:style="${'background-image: url(https://s3-us-west-2.amazonaws.com/minigur/' + image.imageUrl + '.jpg)'}"/>
             </a>

@@ -97,10 +97,10 @@ text-align: center;
 
 .thumbnail {
     width: 240px;
+    position: relative;
     height: 240px;
-    overflow-x: visible;
-    overflow-y: visible;
-    background-size: 100% auto;
+    background-size: cover;
+    overflow: hidden;
 }
 
 .fig {

@@ -35,6 +35,14 @@ public class ImageDAO {
         return builder.toString();
     }
 
+    private Image resultSetToImage(ResultSet resultSet) throws SQLException {
+                String filename = resultSet.getString("filename");
+                String title = resultSet.getString("title");
+                String username = resultSet.getString("username");
+                Date uploadTime = resultSet.getDate("upload_time");
+                return new Image(filename, title, uploadTime, new User(username, false));
+    }
+
     public Image findImage(String imageId) {
         try {
             Connection connection = environment.getJdbcManager().connect();
@@ -67,12 +75,7 @@ public class ImageDAO {
             statement.setInt(1, count);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                String filename = resultSet.getString("filename");
-                String title = resultSet.getString("title");
-                String username = resultSet.getString("username");
-                Date uploadTime = resultSet.getDate("upload_time");
-                Image image = new Image(filename, title, uploadTime, new User(username, false));
-                images.add(image);
+                images.add(resultSetToImage(resultSet));
             }
             connection.close();
             return images;
@@ -96,6 +99,25 @@ public class ImageDAO {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public List<Image> getUserImages(String userId) {
+        List<Image> images = new ArrayList<>();
+        try {
+            Connection connection = environment.getJdbcManager().connect();
+            PreparedStatement statement = connection.prepareStatement("SELECT filename, title, upload_time, username " +
+                    "FROM minigur.Image, minigur.User " +
+                    "WHERE User.id = Image.owner_user AND User.username = ? ORDER BY upload_time;");
+            statement.setString(1, userId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                images.add(resultSetToImage(resultSet));
+            }
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return images;
     }
 
     public String uploadImage(MultipartFile image, String title, String username) {
