@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="css/main.css"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
 
-
     <script>
         $(document).ready(function () {
             $('.btn-search').on('click', function () {
@@ -21,6 +20,22 @@
 
 </head>
 <body>
+<div class="container normal-container margin top">
+    <div class="row">
+        <div class="col-md-4 nav-link">
+            <a href="/user">My Account</a>
+        </div>
+        <div class="col-md-4 nav-link">
+            <a href="/">Minigur</a>
+        </div>
+        <div class="col-md-4 nav-link">
+            <div>
+                <a id="logout" href="#">Log Out</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <nav class="nav-header margin">
     <h3>Search for an Image</h3>
 </nav>
@@ -47,5 +62,27 @@
 
 </div>
 
+<div class="container normal-container">
+    <div class="result-gallery">
+        <figure class="fig" th:each="image : ${images}">
+            <a th:href="${image.imageUrl}">
+                <img class="thumbnail rounded"
+                     th:style="${'background-image: url(https://s3-us-west-2.amazonaws.com/minigur/' + image.imageUrl + '.jpg)'}"/>
+            </a>
+            <figcaption class="figure-caption text-xs-right">
+                <span th:text="${image.imageTitle + ' | '}"/>
+                <a th:href="${'/user/' + image.imageOwner.username}" th:text="${image.imageOwner.username}"/>
+            </figcaption>
+        </figure>
+    </div>
+</div>
+
+<div class="search-results">
+    <div class="gallery">
+
+    </div>
+</div>
 </body>
+<script src="/scripts/main.js"/>
+
 </html>
