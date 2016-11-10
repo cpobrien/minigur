@@ -13,10 +13,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 
 @Component
 public class CommentDAO {
+
+    private static final Integer COMMENT_STR_SZ = 8;
 
     @Autowired
     Environment environment;
@@ -26,6 +29,17 @@ public class CommentDAO {
 
     @Autowired
     ImageDAO imageDAO;
+
+    private String generateBase62(int size) {
+        String alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        StringBuilder builder = new StringBuilder("");
+        for (Integer i = 0; i < size; i++) {
+            Integer randomPosition = ThreadLocalRandom.current().nextInt(0, alphabet.length() - 1);
+            builder.append(alphabet.charAt(randomPosition));
+        }
+        return builder.toString();
+    }
+
 
     public List<Comment> getComments(String imageID) {
         List<Comment> comments = new ArrayList<>();
@@ -38,7 +52,8 @@ public class CommentDAO {
                 User user = new User(rs.getString("username"), false);
                 String imageId = rs.getString("filename");
                 Date postedDate = rs.getDate("post_time");
-                Comment comment = new Comment(text, user, imageId, postedDate);
+                String commID = rs.getString("comment_id");
+                Comment comment = new Comment(text, user, imageId, postedDate, commID);
                 comments.add(comment);
             }
         }
@@ -61,7 +76,8 @@ public class CommentDAO {
                 String text = rs.getString("comm.text");
                 String imageId = rs.getString("i.filename");
                 Date date = rs.getDate("comm.post_time");
-                return new Comment(text, user, imageId, date);
+                String commID = rs.getString("comm.comment_id");
+                return new Comment(text, user, imageId, date, commID);
             }
             else {
                 return null;
@@ -74,18 +90,20 @@ public class CommentDAO {
     }
 
     public boolean addComment(Comment comment) {
+        String randomCommID = generateBase62(COMMENT_STR_SZ);
 
         try(Connection c = environment.getJdbcManager().connect()) {
-            PreparedStatement ps = c.prepareStatement("INSERT INTO minigur.Comment (user_id, image_id, text) VALUES (?, ?, ?)");
+            PreparedStatement ps = c.prepareStatement("INSERT INTO minigur.Comment (comment_id, user_id, image_id, text) VALUES (?, ?, ?, ?)");
 
             int userId = userDAO.getUserID(comment.getOwnerUser().getUsername());
             int imageId = imageDAO.getImageId(comment.getImageId());
             if (userId == -1) {
                 return false;
             }
-            ps.setInt(1, userId);
-            ps.setInt(2, imageId);
-            ps.setString(3, comment.getText());
+            ps.setString(1, randomCommID);
+            ps.setInt(2, userId);
+            ps.setInt(3, imageId);
+            ps.setString(4, comment.getText());
             ps.execute();
         }
         catch (SQLException e) {

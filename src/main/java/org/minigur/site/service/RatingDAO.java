@@ -59,6 +59,10 @@ public class RatingDAO {
         return result;
     }
 
+    /**
+     * Uploads the rating to the database.
+     */
+
     public Boolean postRating (Boolean is_upvote, String imageID, String userID) {
         try (Connection connection = environment.getJdbcManager().connect()) {
             PreparedStatement ps = connection.prepareStatement("REPLACE INTO minigur.Rating (user_id, image_id, is_upvote) VALUES (?, ?, ?);");
