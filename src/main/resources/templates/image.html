@@ -50,7 +50,7 @@
     <form method="post" th:action="${'/tag/' + image.imageUrl + '/'}">
         <input type="text" class="form-control form-control-sm" name="tag" placeholder="Post a tag"/>
     </form>
-    <div class="margin" th:each="comment : ${comments}">
+    <div class="margin" th:each="comment : ${comments}" th:id="${comment.commentID}">
         <blockquote class="blockquote">
             <p class="mb-0" th:text="${comment.text}"/>
         </blockquote>
