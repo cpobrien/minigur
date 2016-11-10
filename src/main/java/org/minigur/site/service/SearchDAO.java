@@ -1,5 +1,6 @@
 package org.minigur.site.service;
 
+import org.codehaus.groovy.runtime.powerassert.SourceText;
 import org.minigur.site.Environment;
 import org.minigur.site.models.Image;
 import org.minigur.site.models.SearchRequest;
@@ -22,15 +23,15 @@ public class SearchDAO {
     public List<Image> searchImages(SearchRequest request) {
         List<Image> images = new ArrayList<>();
         String searchString = request.getSearchString().toLowerCase();
-        String searchUsername = request.getSearchUsername() == Boolean.TRUE ? "SELECT i.id FROM minigur.Image i, minigur.User u" +
-                " WHERE i.owner_user = u.id AND LOWER(u.username) LIKE \'%" +  searchString + "%\'" : null;
-        String searchTag = request.getSearchTag() == Boolean.TRUE ? "SELECT i.id FROM minigur.Image i, minigur.TagRelations tr, minigur.Tag t" +
-                " WHERE t.id = tr.id AND i.id = tr.id AND LOWER(t.name) LIKE \'%" + searchString + "%\'" : null;
-        String searchComment = request.getSearchTag() == Boolean.TRUE ? "SELECT c.image_id FROM minigur.Comment c" +
-                " WHERE LOWER(c.text) LIKE \'%" + searchString + "%\'" : null;
-        String searchTitle = request.getSearchTag() == Boolean.TRUE ? "SELECT i.id FROM minigur.Image i" +
-                " WHERE LOWER(i.title) LIKE \'%" + searchString + "%\'" : null;
-        String query = "SELECT * from minigur.Image i WHERE i.id IN (";
+        String searchUsername = request.getSearchUsername() ? "SELECT i.id FROM minigur.Image i, minigur.User u" +
+                " WHERE i.owner_user = u.id AND LOWER(u.username) LIKE ?" : null;
+        String searchTag = request.getSearchTag() ? "SELECT i.id FROM minigur.Image i, minigur.TagRelations tr, minigur.Tag t" +
+                " WHERE t.id = tr.id AND i.id = tr.id AND LOWER(t.name) LIKE ?" : null;
+        String searchComment = request.getSearchComment() ? "SELECT c.image_id FROM minigur.Comment c" +
+                " WHERE LOWER(c.text) LIKE ?" : null;
+        String searchTitle = request.getSearchTitle() ? "SELECT i.id FROM minigur.Image i" +
+                " WHERE LOWER(i.title) LIKE ?" : null;
+        String query = "SELECT * from minigur.Image i, minigur.User u WHERE i.owner_user = u.id AND i.id IN (";
         List<String> searchQueries = new ArrayList<>();
         if (searchUsername != null) {
             searchQueries.add(searchUsername);
@@ -53,11 +54,17 @@ public class SearchDAO {
         }
 
         try (Connection c = environment.getJdbcManager().connect()) {
+            System.out.println(query);
             PreparedStatement ps = c.prepareStatement(query);
+            for (int i = 0; i < searchQueries.size(); i++) {
+                ps.setString(i + 1, "%" + searchString + "%");
+            }
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 String fileName = rs.getString("i.filename");
-                User owner = new User(rs.getString("i.owner_user"), false);
+                User owner = new User(rs.getString("u.username"), false);
+                System.out.println("Owner is...");
+                System.out.println(owner.getUsername());
                 String title = rs.getString("i.title");
                 Date date = rs.getDate("i.upload_time");
 

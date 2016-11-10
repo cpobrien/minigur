@@ -33,6 +33,9 @@ public class SiteRenderController {
     @Autowired
     TagDAO tagDAO;
 
+    @Autowired
+    SearchDAO searchDAO;
+
     private Boolean redirectToLogin(HttpServletRequest request) {
         return request.getSession().getAttribute("user") == null;
     }
@@ -96,10 +99,21 @@ public class SiteRenderController {
     }
 
     @GetMapping("/search")
-    String search(HttpServletRequest request) {
+    String search(HttpServletRequest request,
+                  Model model,
+                  @RequestParam(value = "query", required = false) String query,
+                  @RequestParam(value = "comment", required = false) String comment,
+                  @RequestParam(value = "tag", required = false) String tag,
+                  @RequestParam(value = "user", required = false) String user) {
         if (redirectToLogin(request)) {
             return "redirect:";
         }
+        if (query == null) {
+            return "search";
+        }
+        SearchRequest searchRequest = new SearchRequest(query, true, user != null, comment != null, tag != null);
+        List<Image> images = searchDAO.searchImages(searchRequest);
+        model.addAttribute("images", images);
         return "search";
     }
 }

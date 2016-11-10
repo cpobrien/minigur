@@ -42,12 +42,30 @@
 <nav class="nav-header margin">
     <h3>Search for an Image</h3>
 </nav>
-<div class="container normal-container">
-    <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search for..."/>
-        <span class="input-group-btn">
-        <button class="btn btn-primary" type="button">Search!</button>
-      </span>
+<div class="container">
+    <div class="container normal-container">
+        <form method="get" action="/search">
+            <div class="input-group">
+                <input id="query" name="query"  type="text" class="form-control" placeholder="Search for..."/>
+                <span class="input-group-btn">
+                <button class="btn btn-primary btn-search" type="submit ">Search!</button>
+            </span>
+            </div>
+            <div class="margin">
+            <span>
+                Include in Query:
+            </span>
+                <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" id="comment" name="comment" value="everything"/> Comments
+                </label>
+                <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" id="tag" name="tag" value="tag"/> Tags
+                </label>
+                <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" id="user" name="user" value="user"/> Usernames
+                </label>
+            </div>
+        </form>
     </div>
 </div>
 <nav class="nav-header margin">
