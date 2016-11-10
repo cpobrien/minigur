@@ -3,18 +3,21 @@ package org.minigur.site.service;
 import org.minigur.site.Environment;
 import org.minigur.site.models.Image;
 import org.minigur.site.models.SearchRequest;
+import org.minigur.site.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 @Component
 public class SearchDAO {
     @Autowired
     Environment environment;
+
+    @Autowired
+    UserDAO userDAO;
 
     public List<Image> searchImages(SearchRequest request) {
         List<Image> images = new ArrayList<>();
@@ -53,17 +56,19 @@ public class SearchDAO {
             PreparedStatement ps = c.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                // TODO: complete if you decide to leave this mess
-                String filename = rs.getString("i.filename");
+                String fileName = rs.getString("i.filename");
+                User owner = new User(rs.getString("i.owner_user"), false);
                 String title = rs.getString("i.title");
                 Date date = rs.getDate("i.upload_time");
 
+                Image image = new Image(fileName, title, date, owner);
+                images.add(image);
             }
         }
         catch (SQLException e) {
             e.printStackTrace();
             return null;
         }
-        return null;
+        return images;
     }
 }

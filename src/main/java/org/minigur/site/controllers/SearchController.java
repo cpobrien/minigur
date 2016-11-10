@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -20,16 +19,18 @@ import java.util.List;
 @Controller
 public class SearchController {
     @Autowired
-    SearchDAO searchDao;
+    SearchDAO searchDAO;
 
     @RequestMapping(value = "/query", method = RequestMethod.POST)
-    Boolean search(HttpServletRequest request, @RequestBody SearchRequest searchRequest, Model model) {
+    String search(HttpServletRequest request, @RequestBody SearchRequest searchRequest, Model model) {
         Boolean userLoggedIn = request.getAttribute("user") != null;
         if (userLoggedIn) {
-            return false;
+            return null;
         }
-        List<Image> searchResults = searchDao.searchImages(searchRequest);
-        return true;
+        List<Image> searchResults = searchDAO.searchImages(searchRequest);
+        model.addAttribute("images", searchResults);
+
+        return "search";
     }
 
 
