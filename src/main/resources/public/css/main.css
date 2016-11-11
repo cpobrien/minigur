@@ -179,3 +179,42 @@ text-align: center;
     cursor: pointer;
 }
 
+
+.error-header {
+    padding-top: 85px;
+    text-align: center;
+}
+
+.error-header span {
+    color: #0275d8;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.error-body {
+    margin-top: 55px;
+    text-align: center;
+}
+
+.error-body span {
+    color: royalblue;
+    font-weight: 600;
+    font-size: 19px;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 65px;
+    text-align: center;
+    background-color: #0275d8;;
+}
+
+.footer span {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    display: inline-block;
+    margin-top: 25px;
+}
