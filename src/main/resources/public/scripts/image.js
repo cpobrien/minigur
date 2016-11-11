@@ -20,7 +20,7 @@ function post() {
   });
 }
 
-function delete(url) {
+function deleteImage(url) {
 	return fetch(url, {
 	  method: "DELETE",
 	  credentials: "include",
@@ -34,7 +34,7 @@ function delete(url) {
 	    error("Cannot delete image.");
 	    return;
 	  } else {
-	    window.location.replace(response);
+	    window.location.href = '/';
 	  }
 	});
 }

@@ -65,20 +65,6 @@ public class ImageDAO {
         return null;
     }
 
-    public Boolean deleteImage(String imageId) {
-        try {
-            Connection connection = environment.getJdbcManager().connect();
-            PreparedStatement statement = connection.prepareStatement("DELETE FROM minigur.Image WHERE filename = ?;");
-            statement.setString(1, imageId);
-            Boolean delete = statement.execute();
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
-    }
-
     public List<Image> getLatestImages(Integer count) {
         List<Image> images = new ArrayList<>();
         try {

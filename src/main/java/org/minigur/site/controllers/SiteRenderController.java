@@ -1,6 +1,7 @@
 package org.minigur.site.controllers;
 
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
+import org.codehaus.groovy.runtime.powerassert.SourceText;
 import org.minigur.site.Environment;
 import org.minigur.site.models.*;
 import org.minigur.site.service.*;
@@ -59,12 +60,9 @@ public class SiteRenderController {
                         .getUsername().equals(image.getImageOwner().getUsername())
                         ||
                         ((User) request.getSession().getAttribute("user")).getAdmin();
-
+        System.out.println(canDelete);
         List<Comment> comments = commentDAO.getComments(imageId);
         List<Tag> tags = tagDAO.getTags(imageId);
-        tags.forEach(tag -> {
-            System.out.println(tag.getTag());
-        });
         model.addAttribute("canDelete", canDelete);
         model.addAttribute("tags", tags);
         model.addAttribute("image", image);

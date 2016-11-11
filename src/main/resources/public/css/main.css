@@ -163,6 +163,9 @@ text-align: center;
 
 .delete-btn {
 	float: left;
-	color: red
+	background-color: #d9534f;
+    padding: 5px;
+    border-radius: 2px;
+    cursor: pointer;
 }
 
