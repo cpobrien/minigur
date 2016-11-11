@@ -27,7 +27,7 @@
         <a th:href="${'user/' + image.imageOwner.username}" th:text="${image.imageOwner.username}"
            class="user-link force-right"/>
         <th:block th:if="${canDelete}">
-            <a th:onclick="${'deleteImage(&quot;' + '/image/' + image.imageUrl+ '&quot;)'}" th:text="DELETE"
+            <a id="delete-image" th:text="DELETE"
                class="user-link delete-btn"/>
         </th:block>
 

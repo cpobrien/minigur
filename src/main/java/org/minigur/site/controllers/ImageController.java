@@ -56,19 +56,23 @@ public class ImageController {
      * @return
      */
     @RequestMapping(value = "/image/{imageId}", method = RequestMethod.DELETE)
-    String deleteImage(HttpServletRequest request, @PathVariable("imageId") String imageId) {
+    @ResponseBody String deleteImage(HttpServletRequest request, @PathVariable("imageId") String imageId) {
+        System.out.println("Is this running?");
         Boolean userLoggedIn = request.getSession().getAttribute("user") != null;
         if (!userLoggedIn) {
             return "redirect:";
         }
         User user = (User) request.getSession().getAttribute("user");
         Image image = imageDAO.findImage(imageId);
+        System.out.println(imageId);
+        System.out.println(image);
+        System.out.println(image.getImageOwner());
+        System.out.println(user.getUsername());
         if (!image.getImageOwner().getUsername().equals(user.getUsername()) && !user.getAdmin()) {
             return "redirect:/"+imageId;
         }
-
         imageDAO.deleteImage(imageId);
-        return "redirect:";
+        return "redirect:/";
 
     }
 }

@@ -21,21 +21,11 @@ function post() {
 }
 
 function deleteImage(url) {
-	return fetch(url, {
+	return fetch(`/image${window.location.pathname}/`, {
 	  method: "DELETE",
 	  credentials: "include",
-	  headers: new Headers({
-	    "Content-Type": "application/json"
-	  })
 	}).then(function (response) {
-	  window.location.replace(response);
-	}).then(function (successful) {
-	  if (!successful) {
-	    error("Cannot delete image.");
-	    return;
-	  } else {
-	    window.location.href = '/';
-	  }
+    window.location.href = '/';
 	});
 }
 
@@ -63,6 +53,10 @@ function upvote(rating) {
 }
 
 (function () {
+  var deleteElement = document.getElementById("delete-image");
+  if (deleteElement) {
+    deleteElement.addEventListener("click", deleteImage);
+  }
   document.getElementById("upvote").addEventListener("click", upvote(true));
   document.getElementById("downvote").addEventListener("click", upvote(false));
   document.getElementById("post-button").addEventListener("click", post);
