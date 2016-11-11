@@ -2,6 +2,7 @@ package org.minigur.site.controllers;
 
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.minigur.site.models.Image;
+import org.minigur.site.models.User;
 import org.minigur.site.service.TagDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,7 +39,8 @@ public class TagController {
             return "redirect:";
         }
         System.out.printf("Tagging image %s with id %s\n", imageId, tag);
-        tagDAO.addTag(imageId, tag);
+        User user = (User) request.getSession().getAttribute("user");
+        tagDAO.addTag(imageId, tag, user.getUsername());
         return String.format("redirect:/%s", imageId);
     }
 }
