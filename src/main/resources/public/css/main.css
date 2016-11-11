@@ -161,3 +161,11 @@ text-align: center;
     margin: 15px;
 }
 
+.delete-btn {
+	float: left;
+	background-color: #d9534f;
+    padding: 5px;
+    border-radius: 2px;
+    cursor: pointer;
+}
+

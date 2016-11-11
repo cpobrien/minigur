@@ -22,6 +22,7 @@ public class RatingDAO {
 
     @Autowired
     ImageDAO imageDAO;
+
     /**
      * Get Rating gets the rating information for a specific imageID
      */
@@ -73,6 +74,20 @@ public class RatingDAO {
             } else {
                 ps.setInt(3, 0);
             }
+            ps.execute();
+            connection.close();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    // delete ALL ratings of the user
+    public Boolean deleteRating (String userid) {
+        try (Connection connection = environment.getJdbcManager().connect()) {
+            PreparedStatement ps = connection.prepareStatement("DELETE FROM minigur.Rating WHERE user_id = ?;");
+            ps.setInt(1, userDAO.getUserID(userid));
             ps.execute();
             connection.close();
             return true;

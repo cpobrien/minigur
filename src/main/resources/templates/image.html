@@ -26,6 +26,11 @@
         <h1 class="image-title" th:text="${image.imageTitle}"/>
         <a th:href="${'user/' + image.imageOwner.username}" th:text="${image.imageOwner.username}"
            class="user-link force-right"/>
+        <th:block th:if="${canDelete}">
+            <a id="delete-image" th:text="DELETE"
+               class="user-link delete-btn"/>
+        </th:block>
+
     </div>
     <div class="img-div">
         <a th:href="${'https://s3-us-west-2.amazonaws.com/minigur/' + image.imageUrl + '.jpg'}">
@@ -55,7 +60,7 @@
         <button class="btn btn-primary" id="post-button" type="button">Post</button>
       </span>
     </div>
-    <div class="margin tag-box" th:each="comment : ${comments}">
+    <div class="margin" th:each="comment : ${comments}" th:id="${comment.commentID}">
         <blockquote class="blockquote">
             <p class="mb-0" th:text="${comment.text}"/>
         </blockquote>

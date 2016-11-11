@@ -27,7 +27,7 @@ public class UserSessionController {
         if (!userDAO.checkPassword(userSessionRequest)) {
             return false;
         }
-        User currentUser = new User(userSessionRequest.getUsername(), false);
+        User currentUser = userDAO.getUser(userSessionRequest.getUsername());
         request.getSession().setAttribute("user", currentUser);
         return true;
     }

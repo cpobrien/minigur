@@ -20,6 +20,15 @@ function post() {
   });
 }
 
+function deleteImage(url) {
+	return fetch(`/image${window.location.pathname}/`, {
+	  method: "DELETE",
+	  credentials: "include",
+	}).then(function (response) {
+    window.location.href = '/';
+	});
+}
+
 function upvote(rating) {
   return function () {
     payload = {
@@ -44,6 +53,10 @@ function upvote(rating) {
 }
 
 (function () {
+  var deleteElement = document.getElementById("delete-image");
+  if (deleteElement) {
+    deleteElement.addEventListener("click", deleteImage);
+  }
   document.getElementById("upvote").addEventListener("click", upvote(true));
   document.getElementById("downvote").addEventListener("click", upvote(false));
   document.getElementById("post-button").addEventListener("click", post);

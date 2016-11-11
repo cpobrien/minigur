@@ -144,4 +144,20 @@ public class ImageDAO {
         }
         return null;
     }
+
+    // deletes image and tag_relations (but what about tags?)
+    public Boolean deleteImage(String imageID) {
+        try (Connection c = environment.getJdbcManager().connect()){
+            PreparedStatement ps = c.prepareStatement("DELETE FROM minigur.Image WHERE filename = ?");
+            ps.setString(1, imageID);
+            ps.execute();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        // deletes the image from s3
+        environment.getClient().deleteObject("minigur", imageID);
+        return true;
+    }
 }
