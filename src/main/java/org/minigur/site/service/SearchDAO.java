@@ -26,7 +26,7 @@ public class SearchDAO {
         String searchUsername = request.getSearchUsername() ? "SELECT i.id FROM minigur.Image i, minigur.User u" +
                 " WHERE i.owner_user = u.id AND LOWER(u.username) LIKE ?" : null;
         String searchTag = request.getSearchTag() ? "SELECT i.id FROM minigur.Image i, minigur.TagRelations tr, minigur.Tag t" +
-                " WHERE t.id = tr.id AND i.id = tr.id AND LOWER(t.name) LIKE ?" : null;
+                " WHERE t.id = tr.tag_id AND i.id = tr.image_id AND LOWER(t.name) LIKE ?" : null;
         String searchComment = request.getSearchComment() ? "SELECT c.image_id FROM minigur.Comment c" +
                 " WHERE LOWER(c.text) LIKE ?" : null;
         String searchTitle = request.getSearchTitle() ? "SELECT i.id FROM minigur.Image i" +
