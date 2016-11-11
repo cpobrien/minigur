@@ -47,7 +47,9 @@
     </div>
     <div class="margin tag-box">
         <th:block th:each="tag : ${tags}">
-            <span class="tag-element"><a th:href="${'/tag/' + tag.tag}" th:text="${tag.tag + ' [' + tag.count + ']'}"/> </span>
+            <span class="tag-element" th:attr="tag-name=${tag.tag}"><a th:href="${'/tag/' + tag.tag}" th:text="${tag.tag + ' [' + tag.count + ']'}"/>
+                <i class="fa fa-trash remove-tag" aria-hidden="true" id="trash-tag"></i>
+            </span>
         </th:block>
         <form method="post" th:class="tag-input" th:action="${'/tag/' + image.imageUrl + '/'}">
             <input type="text" class="form-control form-control-sm tag-form" name="tag" placeholder="Post a tag"/>

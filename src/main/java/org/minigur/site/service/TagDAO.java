@@ -100,8 +100,8 @@ public class TagDAO {
     public Boolean deleteTag(String tag, String imgURL) {
         try (Connection c = environment.getJdbcManager().connect()){
             PreparedStatement ps = c.prepareStatement("DELETE FROM minigur.TagRelations " +
-                    "WHERE tag_id IN (SELECT id FROM minigur.Tag WHERE name = ?) " +
-                    "AND image_id IN (SELECT id FROM minigur.Image WHERE filename = ?);");
+                    "WHERE tag_id IN (SELECT id FROM minigur.Tag t WHERE t.name = ?) " +
+                    "AND image_id IN (SELECT id FROM minigur.Image i WHERE i.filename = ?);");
             ps.setString(1, tag);
             ps.setString(2, imgURL);
             ps.execute();

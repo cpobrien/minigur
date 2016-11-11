@@ -44,8 +44,7 @@ public class ImageDAO {
     }
 
     public Image findImage(String imageId) {
-        try {
-            Connection connection = environment.getJdbcManager().connect();
+        try (Connection connection = environment.getJdbcManager().connect()){
             PreparedStatement statement = connection.prepareStatement("SELECT title, upload_time, username " +
                     "FROM minigur.Image, minigur.User WHERE User.id = Image.owner_user AND filename = ?;");
             statement.setString(1, imageId);
@@ -57,7 +56,6 @@ public class ImageDAO {
             String imageTitle = resultSet.getString("title");
             Date uploadTime = resultSet.getDate("upload_time");
             String username = resultSet.getString("username");
-            connection.close();
             return new Image(imageUrl, imageTitle, uploadTime, new User(username, false));
         } catch (SQLException e) {
             e.printStackTrace();
@@ -67,8 +65,7 @@ public class ImageDAO {
 
     public List<Image> getLatestImages(Integer count) {
         List<Image> images = new ArrayList<>();
-        try {
-            Connection connection = environment.getJdbcManager().connect();
+        try (Connection connection = environment.getJdbcManager().connect()){
             PreparedStatement statement = connection.prepareStatement("SELECT filename, title, upload_time, username " +
                     "FROM minigur.Image, minigur.User " +
                     "WHERE User.id = Image.owner_user ORDER BY upload_time DESC LIMIT ?;");
@@ -77,7 +74,6 @@ public class ImageDAO {
             while (resultSet.next()) {
                 images.add(resultSetToImage(resultSet));
             }
-            connection.close();
             return images;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -86,8 +82,7 @@ public class ImageDAO {
     }
 
     public Integer getImageId(String url) {
-        try {
-            Connection connection = environment.getJdbcManager().connect();
+        try (Connection connection = environment.getJdbcManager().connect()){
             PreparedStatement ps = connection.prepareStatement("SELECT id FROM minigur.Image WHERE filename = ?;");
             ps.setString(1, url);
             ResultSet resultSet = ps.executeQuery();
@@ -103,8 +98,7 @@ public class ImageDAO {
 
     public List<Image> getUserImages(String userId) {
         List<Image> images = new ArrayList<>();
-        try {
-            Connection connection = environment.getJdbcManager().connect();
+        try (Connection connection = environment.getJdbcManager().connect()){
             PreparedStatement statement = connection.prepareStatement("SELECT filename, title, upload_time, username " +
                     "FROM minigur.Image, minigur.User " +
                     "WHERE User.id = Image.owner_user AND User.username = ? ORDER BY upload_time;");
@@ -113,9 +107,9 @@ public class ImageDAO {
             while (resultSet.next()) {
                 images.add(resultSetToImage(resultSet));
             }
-            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
+            return null;
         }
         return images;
     }

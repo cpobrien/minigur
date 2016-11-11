@@ -126,9 +126,19 @@ text-align: center;
     font-size: 1rem;
     margin-right: 4px;
     margin-bottom: 4px;
-
 }
 
+.remove-tag {
+    display: inline-block;
+    margin-left: 4px;
+    color: #9a2c21;
+    text-decoration: none;
+}
+
+.remove-tag:hover {
+    color: #CC0000;
+    text-decoration: none;
+}
 
 
 .thumbnail {
