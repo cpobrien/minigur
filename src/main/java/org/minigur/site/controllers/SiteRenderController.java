@@ -1,6 +1,7 @@
 package org.minigur.site.controllers;
 
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
+import org.codehaus.groovy.runtime.StringBufferWriter;
 import org.codehaus.groovy.runtime.powerassert.SourceText;
 import org.minigur.site.Environment;
 import org.minigur.site.models.*;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -120,5 +122,19 @@ public class SiteRenderController {
         model.addAttribute("request", searchRequest);
         model.addAttribute("images", images);
         return "search";
+    }
+
+    @GetMapping("/tag/{tagName}")
+    String getImagesByTag(HttpServletRequest request, Model model, @PathVariable("tagName") String tagName) {
+        if (redirectToLogin(request)) {
+            return "redirect:";
+        }
+
+        SearchRequest searchRequest = new SearchRequest(tagName, false, false, false, true);
+        List<Image> images = searchDAO.searchImages(searchRequest);
+        model.addAttribute("request", searchRequest);
+        model.addAttribute("images", images);
+        return "search";
+
     }
 }
