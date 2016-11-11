@@ -1,6 +1,8 @@
 package org.minigur.site.service;
+import org.minigur.site.models.Image;
 import org.minigur.site.models.User;
 import org.minigur.site.models.UserSessionRequest;
+import org.springframework.beans.factory.access.BootstrapException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.minigur.site.Environment;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -10,11 +12,20 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class UserDAO {
+
     @Autowired
     Environment environment;
+
+    @Autowired
+    RatingDAO ratingDAO;
+
+    @Autowired
+    ImageDAO imageDAO;
 
     public User getUser(String username) {
         try (Connection c = environment.getJdbcManager().connect()) {
@@ -71,20 +82,6 @@ public class UserDAO {
         return true;
     }
 
-    public boolean deleteUser(UserSessionRequest request) {
-        String username = request.getUsername();
-        try (Connection c = environment.getJdbcManager().connect()){
-            PreparedStatement ps = c.prepareStatement("DELETE FROM minigur.User WHERE username = ?");
-            ps.setString(1, username);
-            ps.execute();
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
-    }
-
     public int getUserID(String username) {
         try (Connection c = environment.getJdbcManager().connect()) {
             PreparedStatement ps = c.prepareStatement("SELECT id FROM minigur.User WHERE username = ?");
@@ -100,5 +97,47 @@ public class UserDAO {
         }
         return -1;
     }
+
+    // deletes the user provided along with their posts, ratings and tags.
+    public Boolean deleteUser (String username) {
+        int UserID = getUserID(username);
+        // Delete UserCredentials, User
+        try (Connection c = environment.getJdbcManager().connect()){
+            PreparedStatement ps = c.prepareStatement("DELETE from minigur.UserCredentials where username=?;");
+            ps.setString(1, username);
+            ps.executeQuery();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        // Delete Comments
+        try (Connection c = environment.getJdbcManager().connect()){
+            PreparedStatement ps = c.prepareStatement("DELETE from minigur.Comment where user_id=?;");
+            ps.setInt(1, UserID);
+            ps.executeQuery();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        // Delete ALL ratings
+        ratingDAO.deleteRating(username);
+
+        //Delete ALL images from the user
+        List<Image> imgURLs = imageDAO.getUserImages(username);
+        for(Image i : imgURLs) {
+            imageDAO.deleteImage(i.getImageUrl());
+        }
+
+        // Deletes all the tags associated with the user
+
+
+
+
+        return true;
+    }
+
 
 }

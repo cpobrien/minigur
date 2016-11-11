@@ -113,4 +113,18 @@ public class CommentDAO {
         return true;
     }
 
+    // Delete Comment. takes in a comment_id found in the comment object (randomly generated String)
+    public boolean deleteComment(String commentId) {
+        try (Connection c = environment.getJdbcManager().connect()){
+            PreparedStatement ps = c.prepareStatement("DELETE FROM minigur.Comment WHERE comment_id = ?");
+            ps.setString(1, commentId);
+            ps.execute();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
 }
