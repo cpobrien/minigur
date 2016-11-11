@@ -1,6 +1,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title th:text="${image.imageTitle + '| Minigur'}"/>
+    <title th:text="${image.imageTitle + ' | Minigur'}"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css"
           integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous"/>
     <link rel="stylesheet" type="text/css" href="/css/main.css"/>
@@ -48,7 +48,7 @@
     <div class="margin tag-box">
         <th:block th:each="tag : ${tags}">
             <span class="tag-element" th:attr="tag-name=${tag.tag}"><a th:href="${'/tag/' + tag.tag}" th:text="${tag.tag + ' [' + tag.count + ']'}"/>
-                <i class="fa fa-trash remove-tag" aria-hidden="true" id="trash-tag"></i>
+                <i th:if="${canDelete}" class="fa fa-trash remove-tag" aria-hidden="true" id="trash-tag"/>
             </span>
         </th:block>
         <form method="post" th:class="tag-input" th:action="${'/tag/' + image.imageUrl + '/'}">
