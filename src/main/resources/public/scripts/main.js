@@ -4,7 +4,7 @@
       method: "POST",
       credentials: "include",
     }).then(function (response) {
-      window.location.reload();
+      window.location.href = '/';
     })
   });
 })();
