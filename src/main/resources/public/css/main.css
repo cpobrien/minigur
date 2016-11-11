@@ -161,3 +161,8 @@ text-align: center;
     margin: 15px;
 }
 
+.delete-btn {
+	float: left;
+	color: red
+}
+

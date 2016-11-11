@@ -20,6 +20,25 @@ function post() {
   });
 }
 
+function delete(url) {
+	return fetch(url, {
+	  method: "DELETE",
+	  credentials: "include",
+	  headers: new Headers({
+	    "Content-Type": "application/json"
+	  })
+	}).then(function (response) {
+	  window.location.replace(response);
+	}).then(function (successful) {
+	  if (!successful) {
+	    error("Cannot delete image.");
+	    return;
+	  } else {
+	    window.location.replace(response);
+	  }
+	});
+}
+
 function upvote(rating) {
   return function () {
     payload = {

@@ -26,6 +26,8 @@
         <h1 class="image-title" th:text="${image.imageTitle}"/>
         <a th:href="${'user/' + image.imageOwner.username}" th:text="${image.imageOwner.username}"
            class="user-link force-right"/>
+        <a th:if="${canDelete}" th:onclick="${'delete(&quot;' + '/image/' + image.imageUrl+ '&quot;)'}" th:text="DELETE"
+           class="user-link delete-btn"/>
     </div>
     <div class="img-div">
         <a th:href="${'https://s3-us-west-2.amazonaws.com/minigur/' + image.imageUrl + '.jpg'}">
