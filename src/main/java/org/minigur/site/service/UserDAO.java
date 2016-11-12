@@ -146,4 +146,20 @@ public class UserDAO {
     }
 
 
+    public List<User> getUsersByUsername(String username) {
+        List<User> users = new ArrayList<>();
+        try (Connection c = environment.getJdbcManager().connect()) {
+            PreparedStatement ps = c.prepareStatement("SELECT * FROM minigur.User WHERE username LIKE ?;");
+            ps.setString(1, "%" + username + "%");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                User user = new User(rs.getString("username"), rs.getBoolean("is_admin"));
+                users.add(user);
+            }
+        }
+        catch (SQLException e) {
+            return null;
+        }
+        return users;
+    }
 }

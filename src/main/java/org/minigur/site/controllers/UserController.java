@@ -7,6 +7,8 @@ import org.minigur.site.service.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/user_api")
 public class UserController {
@@ -16,6 +18,16 @@ public class UserController {
     @RequestMapping(value = "/{username}", method = RequestMethod.GET)
     User getUser(@PathVariable("username") String username) {
         return userDao.getUser(username);
+    }
+
+    @RequestMapping(value = "/search/{username}", method = RequestMethod.POST)
+    List<User> getUsersByUsername(@PathVariable("username") String username) {
+        return userDao.getUsersByUsername(username);
+    }
+
+    @RequestMapping(value = "/search", method = RequestMethod.POST)
+    List<User> getAllUsers() {
+        return userDao.getUsersByUsername("");
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)

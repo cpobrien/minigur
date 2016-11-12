@@ -29,6 +29,20 @@
         <span th:text="${user.username}"/>
     </h3>
 </nav>
+<th:block th:if="${user.getAdmin()}">
+    <div class="container normal-container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="input-group user-search">
+                    <input type="text" id="user-search" class="form-control" placeholder="Search for users"></input>
+                    <span class="input-group-btn">
+                        <button id="search-btn" class="btn btn-primary btn-search" type="button">Search!</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
 <div class="container normal-container">
     <div class="gallery">
         <figure class="fig" th:each="image : ${images}">
