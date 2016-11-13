@@ -184,6 +184,11 @@ text-align: center;
     margin: auto;
 }
 
+.users-table {
+    max-height: 350px;
+    overflow-y: scroll;
+}
+
 .user-search {
     margin-top: 20px;
 }
