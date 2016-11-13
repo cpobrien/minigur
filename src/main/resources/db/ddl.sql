@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS Image (
   upload_time DATETIME DEFAULT CURRENT_TIMESTAMP,
   owner_user INT(11),
   PRIMARY KEY (id),
-  FOREIGN KEY (owner_user) REFERENCES User (id)
+  FOREIGN KEY (owner_user) REFERENCES User (id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Comment (
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS Comment (
   text TEXT,
   post_time DATETIME DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
-  FOREIGN KEY (user_id) REFERENCES User (id),
+  FOREIGN KEY (user_id) REFERENCES User (id) ON DELETE CASCADE,
   FOREIGN KEY (image_id) REFERENCES Image (id) ON DELETE CASCADE
 );
 
@@ -60,6 +60,6 @@ CREATE TABLE IF NOT EXISTS Rating (
   image_id INT(11),
   is_upvote BOOLEAN,
   PRIMARY KEY (user_id, image_id),
-  FOREIGN KEY (user_id) REFERENCES User (id),
+  FOREIGN KEY (user_id) REFERENCES User (id)ON DELETE CASCADE,
   FOREIGN KEY (image_id) REFERENCES Image (id) ON DELETE CASCADE
 );

@@ -101,29 +101,6 @@ public class UserDAO {
     // deletes the user provided along with their posts, ratings and tags.
     public Boolean deleteUser (String username) {
         int userID = getUserID(username);
-        // Delete UserCredentials, User
-        try (Connection c = environment.getJdbcManager().connect()){
-            PreparedStatement ps = c.prepareStatement("DELETE from minigur.UserCredentials where username=?;");
-            ps.setString(1, username);
-            ps.execute();
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-        // Delete Comments
-        try (Connection c = environment.getJdbcManager().connect()){
-            PreparedStatement ps = c.prepareStatement("DELETE from minigur.Comment where user_id=?;");
-            ps.setInt(1, userID);
-            ps.execute();
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-
-        // Delete ALL ratings
-        ratingDAO.deleteRating(username);
 
         //Delete ALL images from the user
         List<Image> imgURLs = imageDAO.getUserImages(username);
@@ -131,11 +108,10 @@ public class UserDAO {
             imageDAO.deleteImage(i.getImageUrl());
         }
 
-        // Deletes all the tags associated with the user
-
+        // Delete UserCredentials, User, Images, tags, comments (due to cascading)
         try (Connection c = environment.getJdbcManager().connect()){
-            PreparedStatement ps = c.prepareStatement("DELETE from minigur.TagRelations where user_id=?;");
-            ps.setInt(1, userID);
+            PreparedStatement ps = c.prepareStatement("DELETE from minigur.UserCredentials where username=?;");
+            ps.setString(1, username);
             ps.execute();
         }
         catch (SQLException e) {
