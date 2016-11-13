@@ -25,6 +25,13 @@
   function buildUserTable(json) {
     var table = document.getElementById("users-table");
     table.innerHTML = '';
+    if (json.length === 0) {
+      var row = table.insertRow();
+      var noResultsCell = row.insertCell(0);
+      noResultsCell.setAttribute("align", "center");
+      noResultsCell.innerHTML = "No users found."
+      return;
+    }
     var tableHead = table.createTHead();
     var th = document.createElement("th");
     th.innerHTML = "Username";
