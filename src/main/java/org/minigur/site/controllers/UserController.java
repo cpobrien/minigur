@@ -42,12 +42,11 @@ public class UserController {
 
     @RequestMapping(value = "/{username}", method = RequestMethod.DELETE)
     Boolean deleteUser(HttpServletRequest session, @PathVariable("username") String username) {
-        User currentUser = (User) session.getAttribute("user");
-        // TODO: commented lines below throw null pointer exc
-//        Boolean isUserOwner = currentUser.getUsername().equals(username);
-//        if (!isUserOwner && !currentUser.getAdmin()) {
-//            return false;
-//        }
+        User currentUser = (User) session.getSession().getAttribute("user");
+        Boolean isUserOwner = currentUser.getUsername().equals(username);
+        if (!isUserOwner && !currentUser.getAdmin()) {
+            return false;
+        }
         userDao.deleteUser(username);
         return true;
     }
