@@ -179,6 +179,11 @@ text-align: center;
     cursor: pointer;
 }
 
+.delete-user-btn {
+    display: block;
+    margin: auto;
+}
+
 .user-search {
     margin-top: 20px;
 }

@@ -105,7 +105,7 @@ public class UserDAO {
         try (Connection c = environment.getJdbcManager().connect()){
             PreparedStatement ps = c.prepareStatement("DELETE from minigur.UserCredentials where username=?;");
             ps.setString(1, username);
-            ps.executeQuery();
+            ps.execute();
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -115,7 +115,7 @@ public class UserDAO {
         try (Connection c = environment.getJdbcManager().connect()){
             PreparedStatement ps = c.prepareStatement("DELETE from minigur.Comment where user_id=?;");
             ps.setInt(1, userID);
-            ps.executeQuery();
+            ps.execute();
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -136,7 +136,7 @@ public class UserDAO {
         try (Connection c = environment.getJdbcManager().connect()){
             PreparedStatement ps = c.prepareStatement("DELETE from minigur.TagRelations where user_id=?;");
             ps.setInt(1, userID);
-            ps.executeQuery();
+            ps.execute();
         }
         catch (SQLException e) {
             e.printStackTrace();
