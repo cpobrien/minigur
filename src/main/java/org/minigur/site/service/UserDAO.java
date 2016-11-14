@@ -2,6 +2,7 @@ package org.minigur.site.service;
 import org.minigur.site.models.Image;
 import org.minigur.site.models.User;
 import org.minigur.site.models.UserSessionRequest;
+import org.minigur.site.models.UserStats;
 import org.springframework.beans.factory.access.BootstrapException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.minigur.site.Environment;
@@ -137,5 +138,44 @@ public class UserDAO {
             return null;
         }
         return users;
+    }
+
+    public UserStats getUserStats(String username) {
+        Integer userId = getUserID(username);
+        Integer comments = 0;
+        Integer upvotes = 0;
+        Integer downvotes = 0;
+        try (Connection c = environment.getJdbcManager().connect()) {
+
+            try (PreparedStatement ps = c.prepareStatement("SELECT COUNT(*) FROM minigur.Rating WHERE Rating.user_id = ? AND Rating.is_upvote = ?")) {
+                ps.setInt(1, userId);
+                ps.setBoolean(2, true);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    upvotes = rs.getInt(1);
+                }
+            }
+            try (PreparedStatement ps = c.prepareStatement("SELECT COUNT(*) FROM minigur.Rating WHERE Rating.user_id = ? AND Rating.is_upvote = ?")) {
+                ps.setInt(1, userId);
+                ps.setBoolean(2, false);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    downvotes = rs.getInt(1);
+                }
+            }
+            try (PreparedStatement ps = c.prepareStatement("SELECT COUNT(*) FROM minigur.Comment WHERE user_id = ?")) {
+                ps.setInt(1, userId);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    comments = rs.getInt(1);
+                }
+            }
+
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return new UserStats(0, comments, upvotes, downvotes);
     }
 }

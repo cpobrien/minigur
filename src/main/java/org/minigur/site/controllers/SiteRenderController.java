@@ -98,13 +98,12 @@ public class SiteRenderController {
         User user = (User) request.getSession().getAttribute("user");
         Boolean isCurrentUser = user.getUsername().equals(userId);
         List<Image> images = imageDAO.getUserImages(userId);
+        UserStats userStats = userDAO.getUserStats(userId);
+        userStats.setImageCount(images.size());
         model.addAttribute("user", pageUser);
         model.addAttribute("isCurrentUser", isCurrentUser);
         model.addAttribute("images", images);
-        model.addAttribute("upvotes", ratingDAO.countUpvotes(pageUser.getUsername()));
-        model.addAttribute("downvotes", ratingDAO.countDownvotes(pageUser.getUsername()));
-        model.addAttribute("commentCount", commentDAO.countComments(pageUser.getUsername()));
-        model.addAttribute("imageCount", images.size());
+        model.addAttribute("userStats", userStats);
 
         return "user";
     }
