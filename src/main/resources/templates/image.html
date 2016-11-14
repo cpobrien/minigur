@@ -63,6 +63,9 @@
       </span>
     </div>
     <div class="margin" th:each="comment : ${comments}" th:id="${comment.commentID}">
+        <th:block th:if="${curUser.equals(comment.ownerUser.username)}">
+            <a id="edit-comment" th:text="EDIT" class="user-link edit-btn"/>
+        </th:block>
         <blockquote class="blockquote">
             <p class="mb-0" th:text="${comment.text}"/>
         </blockquote>
