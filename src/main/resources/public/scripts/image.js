@@ -29,6 +29,32 @@ function deleteImage(url) {
 	});
 }
 
+function enableEdit(id) {
+	$('#'+id).find('.blockquote').attr('contenteditable', 'true');
+	$('#'+id).find('#edit-comment').addClass('editing').html('SUBMIT');
+}
+
+function submitEdit(id) {
+  var payload = {
+    text: $('#'+id).find('p').html()
+  };
+  fetch(`${window.location.pathname}/comment/`+id, {
+    method: "POST",
+    credentials: "include",
+    body: JSON.stringify(payload),
+    headers: new Headers({
+      "Content-Type": "application/json"
+    })
+  }).then(function (response) {
+    return response.json();
+  }).then(function (successful) {
+    if (!successful) {
+      return;
+    }
+    window.location.reload();
+  });
+}
+
 function upvote(rating) {
   return function () {
     payload = {
@@ -84,6 +110,16 @@ function deleteTag() {
   if (deleteElement) {
     deleteElement.addEventListener("click", deleteImage);
   }
+
+  $('#edit-comment').on('click', function(){
+    var id = $(this).closest('.margin').attr('id');
+    if ($(this).hasClass('editing')){
+        submitEdit(id);
+    } else {
+        enableEdit(id);
+    }
+  });
+
   document.getElementById("upvote").addEventListener("click", upvote(true));
   document.getElementById("downvote").addEventListener("click", upvote(false));
   document.getElementById("post-button").addEventListener("click", post);

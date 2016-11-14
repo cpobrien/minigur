@@ -62,9 +62,9 @@ public class SiteRenderController {
                         .getUsername().equals(image.getImageOwner().getUsername())
                         ||
                         ((User) request.getSession().getAttribute("user")).getAdmin();
-        System.out.println(canDelete);
         List<Comment> comments = commentDAO.getComments(imageId);
         List<Tag> tags = tagDAO.getTags(imageId);
+        model.addAttribute("curUser", ((User) request.getSession().getAttribute("user")).getUsername());
         model.addAttribute("canDelete", canDelete);
         model.addAttribute("tags", tags);
         model.addAttribute("image", image);

@@ -66,17 +66,17 @@ public class CommentDAO {
 
     public Comment getComment(String commentID) {
         Comment comment;
-        String query = "SELECT * FROM minigur.Comment comm, minigur.User u, minigur.Image i, WHERE comm.user_id = u.id AND comm.id = ? AND comm.image_id = image.id";
+        String query = "SELECT * FROM minigur.Comment c, minigur.User u, minigur.Image i WHERE c.user_id = u.id AND c.comment_id = ? AND c.image_id = i.id";
         try(Connection c = environment.getJdbcManager().connect()) {
             PreparedStatement ps = c.prepareStatement(query);
             ps.setString(1, commentID);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 User user = new User(rs.getString("u.username"), rs.getBoolean("u.is_admin"));
-                String text = rs.getString("comm.text");
+                String text = rs.getString("c.text");
                 String imageId = rs.getString("i.filename");
-                Date date = rs.getDate("comm.post_time");
-                String commID = rs.getString("comm.comment_id");
+                Date date = rs.getDate("c.post_time");
+                String commID = rs.getString("c.comment_id");
                 return new Comment(text, user, imageId, date, commID);
             }
             else {
@@ -105,6 +105,21 @@ public class CommentDAO {
             ps.setInt(3, imageId);
             ps.setString(4, comment.getText());
             ps.execute();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public boolean updateComment(Comment comment, String text) {
+        try(Connection c = environment.getJdbcManager().connect()) {
+            PreparedStatement ps = c.prepareStatement("UPDATE minigur.Comment c SET c.text = ? WHERE c.comment_id = ?");
+
+            ps.setString(1, text);
+            ps.setString(2, comment.getCommentID());
+            ps.executeUpdate();
         }
         catch (SQLException e) {
             e.printStackTrace();
