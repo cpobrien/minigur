@@ -97,4 +97,40 @@ public class RatingDAO {
         return false;
     }
 
+    public int countUpvotes (String username) {
+        int upvotes = 0;
+        try (Connection c = environment.getJdbcManager().connect()) {
+            PreparedStatement ps = c.prepareStatement("SELECT COUNT(*) FROM minigur.Rating WHERE Rating.user_id = ? AND Rating.is_upvote = ?");
+            ps.setInt(1, userDAO.getUserID(username));
+            ps.setBoolean(2, true);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                upvotes = rs.getInt(0);
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+        return upvotes;
+    }
+
+    public int countDownvotes (String username) {
+        int upvotes = 0;
+        try (Connection c = environment.getJdbcManager().connect()) {
+            PreparedStatement ps = c.prepareStatement("SELECT COUNT(*) FROM minigur.Rating WHERE Rating.user_id = ? AND Rating.is_upvote = ?");
+            ps.setInt(1, userDAO.getUserID(username));
+            ps.setBoolean(2, false);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                upvotes = rs.getInt(0);
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+        return upvotes;
+    }
+
 }

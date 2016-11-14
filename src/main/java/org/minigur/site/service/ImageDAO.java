@@ -7,6 +7,7 @@ import org.minigur.site.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 
 import java.io.File;
 import java.io.IOException;
@@ -153,5 +154,22 @@ public class ImageDAO {
         // deletes the image from s3
         environment.getClient().deleteObject("minigur", imageID);
         return true;
+    }
+
+    public int countImages(String username) {
+        int imageCount = 0;
+        try (Connection c = environment.getJdbcManager().connect()) {
+            PreparedStatement ps = c.prepareStatement("SELECT COUNT(*) FROM minigur.Image WHERE owner_user = ?;");
+            ps.setInt(1, userDAO.getUserID(username));
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                imageCount = rs.getInt(0);
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+        return imageCount;
     }
 }
