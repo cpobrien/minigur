@@ -101,6 +101,11 @@ public class SiteRenderController {
         model.addAttribute("user", pageUser);
         model.addAttribute("isCurrentUser", isCurrentUser);
         model.addAttribute("images", images);
+        model.addAttribute("upvotes", ratingDAO.countUpvotes(pageUser.getUsername()));
+        model.addAttribute("downvotes", ratingDAO.countDownvotes(pageUser.getUsername()));
+        model.addAttribute("commentCount", commentDAO.countComments(pageUser.getUsername()));
+        model.addAttribute("imageCount", images.size());
+
         return "user";
     }
 

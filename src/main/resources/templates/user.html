@@ -24,6 +24,49 @@
     </div>
 </div>
 <nav class="nav-header margin">
+    <div class="container normal-sm-container">
+        <table class="table table-sm borderless left-align">
+            <tr>
+                <td>
+                    <th:block th:if="${isCurrentUser}">
+                        <span>You have posted: </span>
+                    </th:block>
+                    <th:block th:if="${!isCurrentUser}">
+                        <span th:text="${user.username}"/>
+                        <span> has posted: </span>
+                    </th:block>
+                </td>
+                <td>
+                    <span th:class="bold" th:text="${imageCount}"/>
+                    <span> images</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                </td>
+                <td>
+                    <span th:class="bold" th:text="${commentCount}"/>
+                    <span> comments</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                </td>
+                <td>
+                    <span th:class="bold" th:text="${upvotes}"/>
+                    <span> upvotes</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                </td>
+                <td>
+                    <span th:class="bold" th:text="${downvotes}"/>
+                    <span> downvotes</span>
+                </td>
+            </tr>
+        </table>
+    </div>
     <h3>
         <span>Images posted by </span>
         <span th:text="${user.username}"/>

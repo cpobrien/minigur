@@ -105,7 +105,7 @@ public class RatingDAO {
             ps.setBoolean(2, true);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                upvotes = rs.getInt(0);
+                upvotes = rs.getInt(1);
             }
         }
         catch (SQLException e) {
@@ -123,7 +123,7 @@ public class RatingDAO {
             ps.setBoolean(2, false);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                upvotes = rs.getInt(0);
+                upvotes = rs.getInt(1);
             }
         }
         catch (SQLException e) {

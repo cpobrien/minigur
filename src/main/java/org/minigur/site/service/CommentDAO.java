@@ -149,7 +149,7 @@ public class CommentDAO {
             ps.setInt(1, userDAO.getUserID(username));
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                commentCount = rs.getInt(0);
+                commentCount = rs.getInt(1);
             }
         }
         catch (SQLException e) {
