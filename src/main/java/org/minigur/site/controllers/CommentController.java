@@ -55,27 +55,6 @@ public class CommentController {
         return null;
     }
 
-    /**
-     * Deletes the comment if:
-     *  1. The user is an admin
-     *  2. The user owns the image
-     *  3. The user owns the comment
-     * @param request The HTTP Request. Contains information about the current user logged in.
-     * @param imageId The image the comment is associated with.
-     * @param commentId The id of the comment
-     * @return whether or not the comment was successfully deleted.
-     */
-    @RequestMapping(value = "/{imageId}/comment/{commentId}", method = RequestMethod.DELETE)
-    Boolean deleteComment(HttpServletRequest request,
-                          @PathVariable("imageId") String imageId,
-                          @PathVariable("commentId") String commentId) {
-        Boolean userLoggedIn = request.getAttribute("user") != null;
-        if (!userLoggedIn) {
-            return false;
-        }
-        User user = (User) request.getAttribute("user");
-        return true;
-    }
 
     /**
      * Update the comment if the user owns the image
@@ -101,5 +80,28 @@ public class CommentController {
         }
 
         return commentDAO.updateComment(_comment, comment.getText());
+    }
+
+    /**
+     * Update the comment if the user owns the image
+     * @param request The HTTP Request. Contains information about the current user logged in.
+     * @param imageId The image the comment is associated with.
+     * @param commentId The id of the comment
+     * @param comment Json of the form {comment: comment} serialized into a Comment
+     * @return whether or not the comment was successfully deleted.
+     */
+    @RequestMapping(value = "/{imageId}/comment/{commentId}", method = RequestMethod.DELETE)
+    Boolean deleteComment(HttpServletRequest request,
+                          @PathVariable("commentId") String commentId) {
+        Boolean userLoggedIn = request.getSession().getAttribute("user") != null;
+        if (!userLoggedIn) {
+            return false;
+        }
+        Comment _comment = commentDAO.getComment(commentId);
+        if (!_comment.getOwnerUser().getUsername().equals(((User)request.getSession().getAttribute("user")).getUsername())) {
+            return false;
+        } else {
+            return commentDAO.deleteComment(commentId);
+        }
     }
 }

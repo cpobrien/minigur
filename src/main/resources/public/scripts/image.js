@@ -78,6 +78,24 @@ function upvote(rating) {
   }
 }
 
+function deleteComment(e) {
+return fetch(`${window.location.pathname}/comment/${$(this).closest('.margin').attr('id')}`, {
+    method: "DELETE",
+    credentials: "include",
+    headers: new Headers({
+      "Content-Type": "application/json"
+    })
+  }).then(function (response) {
+    return response.json();
+  }).then(function (successful) {
+    if (!successful) {
+      return;
+    }
+    //that.parentNode.remove();
+    window.location.reload();
+  });
+};
+
 function deleteTag() {
   console.log(this.parentNode.getAttribute("tag-name").valueOf().trim());
   console.log(window.location.pathname.slice(1));
@@ -111,6 +129,7 @@ function deleteTag() {
     deleteElement.addEventListener("click", deleteImage);
   }
 
+
   $('#edit-comment').on('click', function(){
     var id = $(this).closest('.margin').attr('id');
     if ($(this).hasClass('editing')){
@@ -119,6 +138,10 @@ function deleteTag() {
         enableEdit(id);
     }
   });
+
+  [].forEach.call(document.getElementsByClassName("delete-comment-btn"), function(e) {
+      e.addEventListener("click", deleteComment);
+    });
 
   document.getElementById("upvote").addEventListener("click", upvote(true));
   document.getElementById("downvote").addEventListener("click", upvote(false));

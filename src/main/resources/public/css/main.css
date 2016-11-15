@@ -247,12 +247,21 @@ text-align: center;
 }
 
 .edit-btn {
-	float: right;
-	background-color: grey;
-    border-radius: 2px;
+    float: right;
+    background-color: rgb(46, 222, 108);
+    border-radius: 3px;
     cursor: pointer;
+    padding: 5px;
 }
 
 .editing {
 	background-color: green!important;
+}
+
+.delete-comment-btn {
+    float: right;
+    background-color: red;
+    border-radius: 3px;
+    cursor: pointer;
+    padding: 5px;
 }
