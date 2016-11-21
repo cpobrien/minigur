@@ -110,6 +110,18 @@ public class TagDAO {
             e.printStackTrace();
             return false;
         }
+
+        // delete all unused tags from the Tag table
+        try (Connection c = environment.getJdbcManager().connect()){
+            PreparedStatement ps = c.prepareStatement("DELETE from minigur.Tag " +
+                    "WHERE id NOT IN (SELECT tag_id from minigur.TagRelations);");
+            ps.execute();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
         return true;
     }
 }

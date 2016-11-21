@@ -1,6 +1,7 @@
 package org.minigur.site.controllers;
 
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
+import org.minigur.site.models.DeleteRequest;
 import org.minigur.site.models.User;
 import org.minigur.site.service.TagDAO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,12 +52,13 @@ public class TagController {
 
     @RequestMapping(value = "{tagName}", method = RequestMethod.DELETE)
     @ResponseBody
-    Boolean deleteTag(HttpServletRequest request, @PathVariable("tagName") String tagName, @RequestBody String imageId) {
+    Boolean deleteTag(HttpServletRequest request, @PathVariable("tagName") String tagName, @RequestBody DeleteRequest deleteReqimgID) {
         Boolean userLoggedIn = request.getSession().getAttribute("user") != null;
         if (!userLoggedIn) {
             return false;
         }
-        tagDAO.deleteTag(tagName, imageId);
+
+        tagDAO.deleteTag(tagName, deleteReqimgID.getImageId());
         return true;
     }
 }
