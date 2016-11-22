@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.function.BooleanSupplier;
 
 @RestController
 public class CommentController {
@@ -85,9 +86,7 @@ public class CommentController {
     /**
      * Update the comment if the user owns the image
      * @param request The HTTP Request. Contains information about the current user logged in.
-     * @param imageId The image the comment is associated with.
      * @param commentId The id of the comment
-     * @param comment Json of the form {comment: comment} serialized into a Comment
      * @return whether or not the comment was successfully deleted.
      */
     @RequestMapping(value = "/{imageId}/comment/{commentId}", method = RequestMethod.DELETE)
@@ -97,11 +96,12 @@ public class CommentController {
         if (!userLoggedIn) {
             return false;
         }
+        Boolean admin = ((User)request.getSession().getAttribute("user")).getAdmin();
         Comment _comment = commentDAO.getComment(commentId);
-        if (!_comment.getOwnerUser().getUsername().equals(((User)request.getSession().getAttribute("user")).getUsername())) {
-            return false;
-        } else {
+        if (_comment.getOwnerUser().getUsername().equals(((User)request.getSession().getAttribute("user")).getUsername()) || admin) {
             return commentDAO.deleteComment(commentId);
+        } else {
+            return false;
         }
     }
 }
