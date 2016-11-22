@@ -142,22 +142,5 @@ public class CommentDAO {
         return true;
     }
 
-    public int countComments(String username) {
-        int commentCount = 0;
-        try (Connection c = environment.getJdbcManager().connect()) {
-            PreparedStatement ps = c.prepareStatement("SELECT COUNT(*) FROM minigur.Comment WHERE user_id = ?");
-            ps.setInt(1, userDAO.getUserID(username));
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                commentCount = rs.getInt(1);
-            }
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-            return 0;
-        }
-        return commentCount;
-    }
-
 
 }

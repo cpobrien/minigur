@@ -261,8 +261,9 @@ text-align: center;
 
 .delete-comment-btn {
     float: right;
+    margin-right: 5px;
     background-color: rgb(216, 11, 11);
-    border-radius: 3px;
+    border-radius: 4px;
     cursor: pointer;
     padding: 5px;
     color: white !important;

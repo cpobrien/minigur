@@ -93,7 +93,8 @@ public class CommentController {
     @RequestMapping(value = "/{imageId}/comment/{commentId}", method = RequestMethod.DELETE)
     Boolean deleteComment(HttpServletRequest request,
                           @PathVariable("commentId") String commentId) {
-        Boolean userLoggedIn = request.getSession().getAttribute("user") != null;
+        User user = (User) request.getSession().getAttribute("user");
+        Boolean userLoggedIn = user != null;
         if (!userLoggedIn) {
             return false;
         }

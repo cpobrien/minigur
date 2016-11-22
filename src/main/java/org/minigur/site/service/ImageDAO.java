@@ -156,20 +156,4 @@ public class ImageDAO {
         return true;
     }
 
-    public int countImages(String username) {
-        int imageCount = 0;
-        try (Connection c = environment.getJdbcManager().connect()) {
-            PreparedStatement ps = c.prepareStatement("SELECT COUNT(*) FROM minigur.Image WHERE owner_user = ?;");
-            ps.setInt(1, userDAO.getUserID(username));
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                imageCount = rs.getInt(0);
-            }
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-            return 0;
-        }
-        return imageCount;
-    }
 }
