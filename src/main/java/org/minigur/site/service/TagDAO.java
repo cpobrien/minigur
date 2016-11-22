@@ -113,8 +113,8 @@ public class TagDAO {
 
         // delete all unused tags from the Tag table
         try (Connection c = environment.getJdbcManager().connect()){
-            PreparedStatement ps = c.prepareStatement("DELETE from minigur.Tag " +
-                    "WHERE id NOT IN (SELECT tag_id from minigur.TagRelations);");
+                PreparedStatement ps = c.prepareStatement("DELETE FROM minigur.Tag " +
+                        "WHERE id NOT IN (SELECT tag_id FROM minigur.TagRelations);");
             ps.execute();
         }
         catch (SQLException e) {
